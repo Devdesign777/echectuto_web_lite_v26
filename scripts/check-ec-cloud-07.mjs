@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const sql = fs.readFileSync(new URL('../supabase/migrations/20260915122000_ec_cloud_07_atomic_completion.sql', import.meta.url), 'utf8');
+assert.match(sql, /create or replace function public\.finalize_validated_mission_attempt/, 'atomic RPC missing');
+assert.match(sql, /insert into public\.mission_completions[\s\S]*on conflict \(user_id, mission_id\) do nothing/i, 'atomic anti-farming claim missing');
+assert.match(sql, /insert into public\.player_balances[\s\S]*on conflict \(user_id\) do update/i, 'atomic balance increment missing');
+assert.match(sql, /insert into public\.economy_ledger/g, 'ledger write missing');
+assert.match(sql, /revoke all on function[\s\S]*from authenticated/i, 'authenticated execute revoke missing');
+assert.match(sql, /grant execute on function[\s\S]*to service_role/i, 'service role execute grant missing');
+assert.doesNotMatch(sql, /p_reward|p_xp|p_ets|p_stars/i, 'client-controlled reward argument detected');
+console.log('EC-CLOUD-07 atomic transaction gate: PASS');

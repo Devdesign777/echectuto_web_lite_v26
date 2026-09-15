@@ -1,21 +1,14 @@
-import { rewardFromMissionDefinition, ZERO_REWARD } from '../economy/reward-policy.mjs';
+import { ZERO_REWARD } from '../economy/reward-policy.mjs';
 
 function requireText(value, field) {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new TypeError(`${field} is required`);
-  }
+  if (typeof value !== 'string' || value.trim() === '') throw new TypeError(`${field} is required`);
   return value.trim();
 }
 
 /**
  * Authoritative mission-completion use case.
- *
- * Security boundary:
- * - request contains identifiers/evidence only, never trusted reward values;
- * - mission catalog is server-owned;
- * - validator is server-owned;
- * - claimFirstCompletion must be atomic in the database;
- * - only the first successful completion receives the principal reward.
+ * Chess/evidence validation happens first; one database transaction then finalizes the attempt,
+ * claims first completion, writes ledger entries and increments balances atomically.
  */
 export async function completeMission(request, deps) {
   const userId = requireText(request?.userId, 'userId');
@@ -23,53 +16,29 @@ export async function completeMission(request, deps) {
   const attemptId = requireText(request?.attemptId, 'attemptId');
 
   const mission = await deps.missions.getById(missionId);
-  if (!mission || mission.enabled === false) {
-    return { ok: false, code: 'MISSION_NOT_AVAILABLE' };
-  }
+  if (!mission || mission.enabled === false) return { ok: false, code: 'MISSION_NOT_AVAILABLE' };
 
-  const validation = await deps.validator.validate({
-    userId,
-    mission,
-    attemptId,
-    evidence: request.evidence ?? null,
-  });
-
+  const validation = await deps.validator.validate({ userId, mission, attemptId, evidence: request.evidence ?? null });
   if (!validation?.passed) {
-    return {
-      ok: false,
-      code: 'MISSION_NOT_PASSED',
-      feedback: validation?.feedback ?? null,
-    };
+    return { ok: false, code: 'MISSION_NOT_PASSED', feedback: validation?.feedback ?? null };
   }
 
-  const firstCompletion = await deps.progress.claimFirstCompletion({
+  const finalized = await deps.progress.finalizeValidatedAttempt({
     userId,
     missionId,
     attemptId,
-    completedAt: deps.clock.now(),
+    validationFeedback: validation?.feedback ?? null,
   });
 
-  if (!firstCompletion) {
-    return {
-      ok: true,
-      code: 'REPLAY_COMPLETED',
-      firstCompletion: false,
-      reward: ZERO_REWARD,
-    };
+  if (!finalized.firstCompletion) {
+    return { ok: true, code: 'REPLAY_COMPLETED', firstCompletion: false, reward: ZERO_REWARD, balance: finalized.balance };
   }
-
-  const reward = rewardFromMissionDefinition(mission);
-  await deps.economy.grantMissionReward({
-    userId,
-    missionId,
-    attemptId,
-    reward,
-  });
 
   return {
     ok: true,
     code: 'FIRST_COMPLETION_REWARDED',
     firstCompletion: true,
-    reward,
+    reward: finalized.reward,
+    balance: finalized.balance,
   };
 }
