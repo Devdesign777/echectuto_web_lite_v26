@@ -1,4 +1,5 @@
 import { ZERO_REWARD } from '../economy/reward-policy.mjs';
+import { isOfficiallyRewardable } from '../missions/certification.mjs';
 
 function requireText(value, field) {
   if (typeof value !== 'string' || value.trim() === '') throw new TypeError(`${field} is required`);
@@ -17,6 +18,7 @@ export async function completeMission(request, deps) {
 
   const mission = await deps.missions.getById(missionId);
   if (!mission || mission.enabled === false) return { ok: false, code: 'MISSION_NOT_AVAILABLE' };
+  if (!isOfficiallyRewardable(mission)) return { ok: false, code: 'MISSION_NOT_CERTIFIED' };
 
   const validation = await deps.validator.validate({ userId, mission, attemptId, evidence: request.evidence ?? null });
   if (!validation?.passed) {

@@ -7,7 +7,7 @@ function fixture(overrides = {}) {
   let claimed = false;
   const calls = [];
   const deps = {
-    missions: { getById: async () => ({ id: 'w1-m1', enabled: true, rewardXp: 150, rewardStars: 1 }) },
+    missions: { getById: async () => ({ id: 'w1-m1', enabled: true, status: 'certified', rewardXp: 150, rewardStars: 1 }) },
     validator: { validate: async () => ({ passed: true }) },
     progress: { finalizeValidatedAttempt: async (input) => {
       calls.push(input);
