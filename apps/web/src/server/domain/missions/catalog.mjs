@@ -16,6 +16,12 @@ const RAW_MISSIONS = [
   { id:'world4-3', world:4, order:3, title:'Mat de la dernière rangée', kind:'chess_move', status:'certified', rewardXp:210, definition:{sideToMove:'white',objective:'mate_in_one',position:{g1:'♔',e1:'♖',g8:'♚',f7:'♟',g7:'♟',h7:'♟'},expectedMove:{from:'e1',to:'e8'}} },
   { id:'world4-4', world:4, order:4, title:'Dame et roi coordonnés', kind:'chess_move', status:'certified', rewardXp:230, definition:{sideToMove:'white',objective:'mate_in_one',position:{f6:'♔',e7:'♕',h8:'♚'},expectedMove:{from:'e7',to:'g7'}} },
   { id:'world4-5', world:4, order:5, title:'Mat en un', kind:'chess_move', status:'certified', rewardXp:260, definition:{sideToMove:'white',objective:'mate_in_one',position:{f7:'♔',d3:'♗',g1:'♖',h8:'♚'},expectedMove:{from:'g1',to:'g8'}} },
+  { id:'world5-1', world:5, order:1, title:'Prendre le centre', kind:'chess_move', status:'certified', rewardXp:220, definition:{sideToMove:'white',objective:'occupy_center',position:{e1:'♔',e2:'♙',e8:'♚'},expectedMove:{from:'e2',to:'e4'}} },
+  { id:'world5-2', world:5, order:2, title:'Sortir les cavaliers', kind:'chess_move', status:'certified', rewardXp:230, definition:{sideToMove:'white',objective:'develop_minor',position:{e1:'♔',g1:'♘',e8:'♚'},expectedMove:{from:'g1',to:'f3'}} },
+  { id:'world5-3', world:5, order:3, title:'Libérer le fou', kind:'chess_move', status:'certified', rewardXp:240, definition:{sideToMove:'white',objective:'develop_minor',position:{e1:'♔',f1:'♗',e8:'♚'},expectedMove:{from:'f1',to:'c4'}} },
+  { id:'world5-4', world:5, order:4, title:'Mettre le roi à l’abri', kind:'chess_move', status:'certified', rewardXp:260, definition:{sideToMove:'white',objective:'castle_kingside',position:{e1:'♔',h1:'♖',e8:'♚'},expectedMove:{from:'e1',to:'g1'}} },
+  { id:'world5-5', world:5, order:5, title:'Ne pas perdre de temps', kind:'chess_move', status:'certified', rewardXp:280, definition:{sideToMove:'white',objective:'develop_minor',position:{e1:'♔',b1:'♘',e8:'♚'},expectedMove:{from:'b1',to:'d2'}} },
+  { id:'world5-6', world:5, order:6, title:'Développement complet', kind:'chess_move', status:'certified', rewardXp:310, definition:{sideToMove:'white',objective:'complete_development',position:{g1:'♔',f1:'♖',a1:'♖',b1:'♘',c4:'♗',f3:'♘',e2:'♙',e8:'♚'},expectedMove:{from:'b1',to:'c3'}} },
 ];
 
 function deepFreeze(value){ if(value && typeof value==='object' && !Object.isFrozen(value)){ Object.freeze(value); for(const v of Object.values(value)) deepFreeze(v); } return value; }

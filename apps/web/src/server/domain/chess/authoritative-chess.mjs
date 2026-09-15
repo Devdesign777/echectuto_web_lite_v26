@@ -29,7 +29,17 @@ function pseudoLegal(position, move, side){
   const piece=position[from]; if(!piece) return false; const [color,type]=PIECES[piece]; if(color!==side) return false;
   const target=position[to]; if(target && PIECES[target][0]===color) return false;
   const [fx,fy]=coords(from),[tx,ty]=coords(to), dx=tx-fx,dy=ty-fy, ax=Math.abs(dx),ay=Math.abs(dy);
-  if(type==='king') return ax<=1&&ay<=1;
+  if(type==='king'){
+    if(ax<=1&&ay<=1) return true;
+    if(dy===0&&ax===2){
+      const homeRank=color==='white'?0:7; if(fy!==homeRank||fx!==4) return false;
+      const rookFrom=dx>0?square(7,homeRank):square(0,homeRank); const rookPiece=color==='white'?'♖':'♜';
+      if(position[rookFrom]!==rookPiece) return false;
+      const step=Math.sign(dx); for(let x=fx+step;x!==(dx>0?7:0);x+=step) if(position[square(x,homeRank)]) return false;
+      return true;
+    }
+    return false;
+  }
   if(type==='knight') return (ax===1&&ay===2)||(ax===2&&ay===1);
   if(type==='rook') return (dx===0||dy===0)&&rayClear(position,from,to);
   if(type==='bishop') return ax===ay&&rayClear(position,from,to);
@@ -48,6 +58,7 @@ function pseudoLegal(position, move, side){
 }
 export function applyMove(position, move){
   const next={...normalizePosition(position)}; const piece=next[move.from]; delete next[move.from]; next[move.to]=piece;
+  if(piece && PIECES[piece][1]==='king'){ const [fx,fy]=coords(move.from),[tx]=coords(move.to); if(Math.abs(tx-fx)===2){ const rookFrom=tx>fx?square(7,fy):square(0,fy), rookTo=tx>fx?square(5,fy):square(3,fy); next[rookTo]=next[rookFrom]; delete next[rookFrom]; } }
   if(move.promotion){ const color=PIECES[piece][0]; const map={queen:['♕','♛'],rook:['♖','♜'],bishop:['♗','♝'],knight:['♘','♞']}; next[move.to]=map[move.promotion][color==='white'?0:1]; }
   return normalizePosition(next);
 }
@@ -79,6 +90,10 @@ export function legalMoves(position, side){
 export function isCheckmate(position, side){ return isInCheck(position,side) && legalMoves(position,side).length===0; }
 export function isLegalMove(position, move, side){
   const p=normalizePosition(position); if(!['white','black'].includes(side)||!pseudoLegal(p,move,side)) return false;
+  const piece=p[move.from];
+  if(piece && PIECES[piece][1]==='king'){ const [fx,fy]=coords(move.from),[tx]=coords(move.to); if(Math.abs(tx-fx)===2){
+    if(isInCheck(p,side)) return false; const step=Math.sign(tx-fx); const transit=square(fx+step,fy); if(isSquareAttacked(p,transit,side==='white'?'black':'white')) return false;
+  }}
   const next=applyMove(p,move); const kingPiece=side==='white'?'♔':'♚'; const king=Object.keys(next).find(s=>next[s]===kingPiece);
   if(!king) return false; return !isSquareAttacked(next,king,side==='white'?'black':'white');
 }
@@ -94,5 +109,9 @@ export function validateMissionEvidence({mission, evidence}){
   if(objective==='escape_check' && isInCheck(finalPosition,mission.sideToMove)) return {passed:false,reason:'king_still_in_check'};
   if(objective==='give_check' && !isInCheck(finalPosition,opponent)) return {passed:false,reason:'check_not_delivered'};
   if(objective==='mate_in_one' && !isCheckmate(finalPosition,opponent)) return {passed:false,reason:'mate_not_delivered'};
+  if(objective==='occupy_center' && !['d4','e4','d5','e5'].includes(move.to)) return {passed:false,reason:'center_not_occupied'};
+  if(objective==='develop_minor'){ const moved=mission.position[move.from]; if(!moved || !['knight','bishop'].includes(PIECES[moved][1])) return {passed:false,reason:'minor_piece_not_developed'}; }
+  if(objective==='castle_kingside'){ const moved=mission.position[move.from]; if(!moved || PIECES[moved][1]!=='king' || move.from!==(mission.sideToMove==='white'?'e1':'e8') || move.to!==(mission.sideToMove==='white'?'g1':'g8')) return {passed:false,reason:'kingside_castle_not_completed'}; }
+  if(objective==='complete_development'){ const developed=['c3','f3','c4','f4','b5','g5','e2','d2']; const minors=Object.entries(finalPosition).filter(([sq,p])=>PIECES[p]?.[0]===mission.sideToMove && ['knight','bishop'].includes(PIECES[p][1]) && developed.includes(sq)); if(minors.length<3) return {passed:false,reason:'development_incomplete'}; }
   return {passed:true,reason:'validated',finalPosition};
 }
