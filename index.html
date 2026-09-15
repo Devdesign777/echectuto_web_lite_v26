@@ -1,0 +1,1550 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b11" />
+  <meta name="description" content="EchecTuto — univers immersif d'apprentissage des échecs." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>EchecTuto — Prototype immersif</title>
+</head>
+<body>
+  <div class="boot-screen" id="boot">
+    <div class="boot-mark" aria-hidden="true">
+      <span>♞</span>
+      <span>♛</span>
+      <span>♜</span>
+    </div>
+    <div class="boot-title">ECHETSUTO</div>
+    <div class="boot-sub">Construis ton regard. Maîtrise l'échiquier.</div>
+    <div class="boot-line"><i></i></div>
+  </div>
+
+  <div class="grain"></div>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <header class="topbar glass">
+    <a class="brand" href="#accueil" aria-label="EchecTuto accueil">
+      <div class="brand-emblem">♞</div>
+      <div>
+        <strong>EchecTuto</strong>
+        <small>Chess learning universe</small>
+      </div>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <a href="#aventure">Aventure</a>
+      <a href="#defis">Défis</a>
+      <a href="#clans">Clans</a>
+      <a href="#coach">Coach IA</a>
+      <a href="#jouer">Jouer</a>
+      <a href="#boutique" data-scroll-shop="1">Boutique</a>
+    </nav>
+
+    <div class="top-actions">
+      <button type="button" class="icon-btn" id="themeToggle" aria-label="Ouvrir les thèmes">◐</button>
+      <button type="button" class="icon-btn" id="soundToggle" aria-label="Activer ou couper l'ambiance sonore">◉</button>
+      <button type="button" class="profile-pill" data-open-profile="1">
+        <span class="avatar">D</span>
+        <span class="profile-meta"><b>Niveau 1</b><small>Progression joueur</small></span>
+      </button>
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">☰</button>
+    </div>
+  </header>
+
+
+  <aside class="appearance-panel glass" id="appearancePanel" aria-hidden="true">
+    <div class="appearance-head">
+      <div>
+        <span class="eyebrow">APPARENCE</span>
+        <h3>Choisis ton univers</h3>
+      
+            <div class="theme-qa-card">
+              <span class="eyebrow">VISIBILITÉ</span>
+              <strong>Contraste renforcé</strong>
+              <p>Les thèmes clairs utilisent désormais des textes sombres sur les surfaces claires et des textes ivoire sur les cartes sombres.</p>
+            </div>
+</div>
+      <button type="button" class="close-appearance" id="closeAppearance" aria-label="Fermer">×</button>
+    </div>
+
+    <div class="theme-grid" id="themeGrid">
+      <button type="button" class="theme-card" data-theme="system">
+        <span class="theme-preview system-preview"><i></i><i></i></span>
+        <strong>Système</strong><small>Suit ton appareil</small>
+      </button>
+      <button type="button" class="theme-card active" data-theme="dark-royal">
+        <span class="theme-preview dark-preview"></span>
+        <strong>Dark Royal</strong><small>Thème signature</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="light-ivory">
+        <span class="theme-preview light-preview"></span>
+        <strong>Light Ivory</strong><small>Clair et élégant</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="champagne">
+        <span class="theme-preview champagne-preview"></span>
+        <strong>Champagne Élégant</strong><small>Clair premium & contrasté</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="midnight-blue">
+        <span class="theme-preview midnight-preview"></span>
+        <strong>Midnight Blue</strong><small>Bleu profond</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="emerald">
+        <span class="theme-preview emerald-preview"></span>
+        <strong>Emerald</strong><small>Vert prestige</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="crimson">
+        <span class="theme-preview crimson-preview"></span>
+        <strong>Crimson</strong><small>Rouge dramatique</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="purple-nebula">
+        <span class="theme-preview purple-preview"></span>
+        <strong>Purple Nebula</strong><small>Violet cosmique</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="golden-chess">
+        <span class="theme-preview gold-preview"></span>
+        <strong>Golden Chess</strong><small>Or & obsidienne</small>
+      </button>
+      <button type="button" class="theme-card" data-theme="oled-black">
+        <span class="theme-preview oled-preview"></span>
+        <strong>OLED Black</strong><small>Noir absolu</small>
+      </button>
+    </div>
+
+    <div class="appearance-options">
+      <label class="switch-row">
+        <span><strong>Réduire les animations</strong><small>Transitions plus discrètes et moins de mouvement.</small></span>
+        <input type="checkbox" id="reduceMotionToggle" />
+        <i></i>
+      </label>
+    </div>
+  </aside>
+
+
+  <aside class="mobile-menu glass" id="mobileMenu">
+    <a href="#aventure">Aventure</a>
+    <a href="#defis">Défis</a>
+    <a href="#clans">Clans</a>
+    <a href="#coach">Coach IA</a>
+    <a href="#jouer">Jouer</a>
+    <a href="#boutique" data-open-shop="1">Boutique</a>
+  </aside>
+<main id="accueil">
+    <section class="hero">
+      <div class="hero-visual" aria-hidden="true">
+        <div class="halo halo-one"></div>
+        <div class="halo halo-two"></div>
+
+        <div class="chess-orbit orbit-one">
+          <span>♜</span><span>♝</span><span>♞</span><span>♛</span>
+        </div>
+        <div class="chess-orbit orbit-two">
+          <span>♙</span><span>♘</span><span>♗</span><span>♖</span>
+        </div>
+
+        <div class="hero-board-wrap" id="heroBoard">
+          <div class="board-glow"></div>
+          <div class="hero-board" id="board"></div>
+        </div>
+      </div>
+
+      <div class="hero-copy reveal">
+        <div class="eyebrow">UNIVERS D'APPRENTISSAGE IMMERSIF</div>
+        <h1>
+          Ne joue plus seulement aux échecs.
+          <span>Deviens quelqu'un de difficile à battre.</span>
+        </h1>
+        <p>
+          Apprends, affronte des IA évolutives, progresse dans des mondes,
+          rejoins un clan et transforme chaque défaite en compétence.
+        </p>
+
+        <div class="hero-player-strip" id="heroPlayerStrip" aria-label="Progression et points du jeu">
+          <div class="hero-player-level">
+            <small>PROFIL</small>
+            <strong>Niveau 1</strong>
+          </div>
+          <div class="hero-point">
+            <span>XP</span>
+            <strong data-economy="xp">0</strong>
+          </div>
+          <div class="hero-point">
+            <span>🪙 ETS</span>
+            <strong data-economy="coins">0</strong>
+          </div>
+          <div class="hero-point">
+            <span>★ Étoiles</span>
+            <strong data-economy="stars">0</strong>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button type="button" class="primary-btn magnetic" data-scroll="#aventure">
+            Entrer dans l'Aventure
+            <span>→</span>
+          </button>
+          <button type="button" class="secondary-btn magnetic" data-scroll="#coach">
+            Découvrir le Coach IA
+          </button>
+        </div>
+        <div class="hero-metrics">
+          <div><strong>12</strong><span>Mondes</span></div>
+          <div><strong>∞</strong><span>Défis</span></div>
+          <div><strong>1</strong><span>Objectif : progresser vraiment</span></div>
+        </div>
+      </div>
+
+      <div class="scroll-hint">
+        <span>Découvrir</span>
+        <i></i>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="aventure">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">CARTE DE PROGRESSION</div>
+          <h2>Ton voyage commence ici.</h2>
+        </div>
+        <p>
+          Chaque monde développe une compétence réelle. Les futurs royaumes restent visibles,
+          mais les victoires doivent être méritées.
+        </p>
+      </div>
+
+      <section class="difficulty-journey" id="difficultyJourney" aria-label="Niveaux de difficulté">
+      <div class="difficulty-head">
+        <div>
+          <span class="eyebrow">PARCOURS DE MAÎTRISE</span>
+          <h3>Progression par niveau</h3>
+          <p>Chaque niveau reprend les grandes compétences avec moins d’aide, plus de profondeur et des adversaires plus exigeants.</p>
+        </div>
+        <div class="difficulty-current"><small>Niveau actuel</small><strong>Facile</strong></div>
+      </div>
+      <div class="difficulty-track">
+        <button type="button" class="difficulty-tier completed" data-tier="very-easy">
+          <span class="tier-number">01</span><b>Très facile</b><small>12 mondes • Sans chrono</small><i>✓</i>
+        </button>
+        <button type="button" class="difficulty-tier active" data-tier="easy">
+          <span class="tier-number">02</span><b>Facile</b><small>12 mondes • + Compte à rebours</small><i>EN COURS</i>
+        </button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">03</span><b>Moyen</b><small>Variantes • + Moins d’indices</small><i>🔒</i></button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">04</span><b>Difficile</b><small>Calcul • + Réponses adverses</small><i>🔒</i></button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">05</span><b>Très difficile</b><small>Précision • + 2 vies</small><i>🔒</i></button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">06</span><b>Expert</b><small>Expert • + Variantes profondes</small><i>🔒</i></button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">07</span><b>Maître</b><small>Maître • + 1 vie</small><i>🔒</i></button>
+        <button type="button" class="difficulty-tier locked" disabled><span class="tier-number">08</span><b>Grand Maître</b><small>Ultime • + Pression maximale</small><i>🔒</i></button>
+      </div>
+      <div class="difficulty-feature-note">
+        <strong>Progression cumulative</strong>
+        <span>Chaque niveau ajoute une nouvelle mécanique de jeu sans perdre les apprentissages utiles du niveau précédent.</span>
+      </div>
+      <div class="difficulty-summary">
+        <span class="difficulty-pill very-easy">Très facile • Campagne initiale validée comme référence</span>
+        <span class="difficulty-arrow">→</span>
+        <span class="difficulty-pill easy">Facile • Génération v34+</span>
+      </div>
+    </section>
+
+    <section class="player-command-center reveal" id="playerCommandCenter" aria-label="Tableau de bord joueur">
+      <div class="command-center-head">
+        <div>
+          <span class="eyebrow">CENTRE DE COMMANDE</span>
+          <h3>Ta prochaine décision, en un regard.</h3>
+          <p>Reprends ta progression, surveille tes objectifs et garde une vision claire de ta campagne.</p>
+        </div>
+        <div class="command-save-state" id="commandSaveState"><i></i><span>Sauvegarde locale active</span></div>
+      </div>
+
+      <div class="command-resume-card">
+        <div class="command-resume-copy">
+          <small>RECOMMANDÉ MAINTENANT</small>
+          <strong id="commandResumeTitle">Monde 01 — Royaume de l’Échiquier</strong>
+          <span id="commandResumeReason">Continue ta campagne.</span>
+        </div>
+        <button type="button" class="command-resume-btn" id="commandResumeBtn">Reprendre <span>→</span></button>
+      </div>
+
+      <div class="command-kpis">
+        <article><span>Campagne Facile</span><strong id="commandCampaignPct">0%</strong><i><b id="commandCampaignBar"></b></i></article>
+        <article><span>Missions validées</span><strong id="commandMissionCount">0 / 75</strong><small id="commandMissionRemaining">75 restantes</small></article>
+        <article><span>Boss vaincus</span><strong id="commandBossCount">0 / 12</strong><small id="commandNextBoss">Prochain : Gardien</small></article>
+        <article><span>Série d’activité</span><strong id="commandStreak">1 jour</strong><small id="commandLastVisit">Aujourd’hui</small></article>
+      </div>
+
+      <div class="command-grid">
+        <section class="command-panel command-objectives">
+          <div class="command-panel-head"><div><small>OBJECTIFS</small><strong>Mission du jour</strong></div><span id="commandDailyStamp">Aujourd’hui</span></div>
+          <div class="command-objective-list">
+            <div class="command-objective" data-command-objective="missions">
+              <span class="command-check">01</span><div><b>Valider une mission</b><small id="dailyMissionText">0 / 1</small><i><em id="dailyMissionBar"></em></i></div>
+            </div>
+            <div class="command-objective" data-command-objective="boss">
+              <span class="command-check">02</span><div><b>Progresser vers un Boss</b><small id="dailyBossText">0 / 1</small><i><em id="dailyBossBar"></em></i></div>
+            </div>
+            <div class="command-objective" data-command-objective="training">
+              <span class="command-check">03</span><div><b>Revoir un monde terminé</b><small id="dailyTrainingText">À faire</small><i><em id="dailyTrainingBar"></em></i></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="command-panel command-world-nav">
+          <div class="command-panel-head"><div><small>CARTE RAPIDE</small><strong>12 mondes</strong></div><span id="commandWorldSummary">0 terminés</span></div>
+          <div class="command-world-grid" id="commandWorldGrid"></div>
+        </section>
+
+        <section class="command-panel command-session">
+          <div class="command-panel-head"><div><small>SESSION</small><strong>Résumé joueur</strong></div><button type="button" id="commandFocusBtn" aria-pressed="false">Mode focus</button></div>
+          <div class="command-session-stats">
+            <div><span>XP</span><b data-economy="xp">0</b></div>
+            <div><span>ETS</span><b data-economy="coins">0</b></div>
+            <div><span>Étoiles</span><b data-economy="stars">0</b></div>
+            <div><span>Session</span><b id="commandSessionTime">00:00</b></div>
+          </div>
+          <div class="command-weekly">
+            <span>Objectif hebdomadaire</span>
+            <strong id="commandWeeklyText">0 / 10 missions</strong>
+            <i><b id="commandWeeklyBar"></b></i>
+          </div>
+        </section>
+
+        <section class="command-panel command-notifications">
+          <div class="command-panel-head">
+            <div><small>NOTIFICATIONS</small><strong>Ce qui compte maintenant</strong></div>
+            <button type="button" id="commandNotificationsBtn">Voir <span id="commandUnreadBadge">0</span></button>
+          </div>
+          <div class="command-notification-preview" id="commandNotificationPreview">Aucune nouvelle notification.</div>
+        </section>
+      </div>
+
+      <div class="command-shortcuts">
+        <button type="button" id="commandArchiveBtn">Archives d’entraînement</button>
+        <button type="button" id="commandInventoryBtn">Profil & inventaire</button>
+        <button type="button" id="commandProfileBtn">Profil</button>
+        <span><kbd>R</kbd> Reprendre · <kbd>N</kbd> Notifications</span>
+      </div>
+    </section>
+
+    <div class="command-notification-modal" id="commandNotificationModal" aria-hidden="true">
+      <div class="command-notification-backdrop" id="commandNotificationBackdrop"></div>
+      <section role="dialog" aria-modal="true" aria-labelledby="commandNotificationTitle">
+        <header>
+          <div><small>CENTRE JOUEUR</small><h3 id="commandNotificationTitle">Notifications</h3></div>
+          <div class="command-notification-actions">
+            <button type="button" id="commandMarkAllRead">Tout marquer lu</button>
+            <button type="button" id="commandNotificationClose" aria-label="Fermer">×</button>
+          </div>
+        </header>
+        <div id="commandNotificationList" class="command-notification-list"></div>
+      </section>
+    </div>
+    <div class="campaign-level-banner">
+      <div><span class="eyebrow">NIVEAU 02</span><h3>Facile — Nouvelle campagne</h3></div>
+      <p>Les thèmes fondamentaux reviennent avec de vraies positions, des coups à jouer et progressivement moins d’assistance.</p>
+      <span class="campaign-level-badge">FACILE</span>
+    </div>
+    <div class="world-stage reveal">
+        <div class="world-path"></div>
+
+        <article class="world-card active tilt-card" id="world1Card" data-difficulty="easy" data-world="1">
+          <div class="world-index">01</div>
+          <div class="world-symbol">♙</div>
+          <div class="world-content">
+            <span class="tag">Monde actif</span>
+            <h3>Royaume de l'Échiquier</h3>
+            <p>Cases, coordonnées, mouvements, captures et premières décisions.</p>
+            <div class="progress-row"><span id="worldProgressLabel">0 / 5 missions</span><b id="worldProgressPct">0%</b></div>
+            <div class="progress"><i id="worldProgressBar" style="width:0%"></i></div>
+            <div class="world-badges">
+              <span title="Coordonnées">⌖</span>
+              <span title="Tour">♖</span>
+              <span title="Fou">♗</span>
+              <span title="Cavalier">♞</span>
+              <span title="Boss">♚</span>
+            </div>
+            <button type="button" class="world-btn" id="startWorld">Ouvrir la carte d’Aventure</button>
+          </div>
+        </article>
+
+        <article class="world-card locked tilt-card" id="world2Card" data-difficulty="easy" data-world="2" aria-disabled="true">
+          <div class="world-index">02</div>
+          <div class="world-symbol">♟</div>
+          <div class="world-content">
+            <span class="tag lock" id="world2Lock">MONDE VERROUILLÉ</span>
+            <h3>Premières Batailles</h3>
+            <p id="world2Status">Bats le Gardien des 64 Cases pour continuer.</p>
+            <div class="progress-row">
+              <span id="world2Count">0 / 4 missions</span>
+              <b id="world2ProgressPct">0%</b>
+            </div>
+            <div class="progress"><i id="world2Progress" style="width:0%"></i></div>
+            <div class="world-badges">
+              <span title="Attaque">⚔</span>
+              <span title="Défense">🛡</span>
+              <span title="Capture">♜</span>
+              <span title="Vision">◎</span>
+              <span title="Boss">♚</span>
+            </div>
+            <button type="button" class="world-btn" id="world2Btn" disabled>Vaincre le Boss du Monde 01</button>
+          </div>
+        </article>
+
+        <article class="world-card locked tilt-card" id="world3Card" data-difficulty="easy" data-world="3" aria-disabled="true"><span class="real-chess-ribbon">REAL CHESS • FACILE</span>
+          <div class="world-index">03</div>
+          <div class="world-symbol">♞</div>
+          <div class="world-content">
+            <span class="tag lock" id="world3Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume des Tacticiens</h3>
+            <p id="world3Status">Vaincs La Sentinelle des Menaces pour continuer.</p>
+            <div class="progress-row">
+              <span id="world3Count">0 / 5 missions</span>
+              <b id="world3ProgressPct">0%</b>
+            </div>
+            <div class="progress"><i id="world3Progress" style="width:0%"></i></div>
+            <div class="world-badges">
+              <span title="Fourchette">♞</span>
+              <span title="Clouage">📌</span>
+              <span title="Enfilade">↗</span>
+              <span title="Attaque découverte">✦</span>
+              <span title="Boss">♚</span>
+            </div>
+            <button type="button" class="world-btn" id="world3Btn" disabled>Vaincre le Boss du Monde 02</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world4Card" data-difficulty="easy" data-world="4" aria-disabled="true">
+          <div class="world-index">04</div>
+          <div class="world-symbol">♚</div>
+          <div class="world-content">
+            <span class="tag lock" id="world4Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume du Mat</h3>
+            <p id="world4Status">Vaincs Viper pour continuer.</p>
+            <div class="progress-row"><span id="world4Count">0 / 5 missions</span><b id="world4ProgressPct">0%</b></div>
+            <div class="progress"><i id="world4Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>♚</span><span>☗</span><span>♜</span><span>♛</span><span>★</span></div>
+            <button type="button" class="world-btn" id="world4Btn" disabled>Vaincre Viper</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world5Card" data-difficulty="easy" data-world="5" aria-disabled="true">
+          <div class="world-index">05</div><div class="world-symbol">♙</div>
+          <div class="world-content">
+            <span class="tag lock" id="world5Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume du Développement</h3>
+            <p id="world5Status">Vaincs le Roi de Fer pour continuer.</p>
+            <div class="progress-row"><span id="world5Count">0 / 6 missions</span><b id="world5ProgressPct">0%</b></div>
+            <div class="progress"><i id="world5Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>♙</span><span>♘</span><span>♗</span><span>♔</span><span>♜</span><span>★</span></div>
+            <button type="button" class="world-btn" id="world5Btn" disabled>Vaincre le Roi de Fer</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world6Card" data-difficulty="easy" data-world="6" aria-disabled="true">
+          <div class="world-index">06</div><div class="world-symbol">♟</div>
+          <div class="world-content">
+            <span class="tag lock" id="world6Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume du Stratège</h3>
+            <p id="world6Status">Vaincs Orion pour continuer.</p>
+            <div class="progress-row"><span id="world6Count">0 / 6 missions</span><b id="world6ProgressPct">0%</b></div>
+            <div class="progress"><i id="world6Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>♟</span><span>◇</span><span>⇄</span><span>♜</span><span>◎</span><span>♛</span></div>
+            <button type="button" class="world-btn" id="world6Btn" disabled>Vaincre Orion</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world7Card" data-difficulty="easy" data-world="7" aria-disabled="true">
+          <div class="world-index">07</div><div class="world-symbol">♔</div>
+          <div class="world-content">
+            <span class="tag lock" id="world7Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume des Finales</h3>
+            <p id="world7Status">Vaincs Atlas pour continuer.</p>
+            <div class="progress-row"><span id="world7Count">0 / 7 missions</span><b id="world7ProgressPct">0%</b></div>
+            <div class="progress"><i id="world7Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>♔</span><span>♙</span><span>□</span><span>♜</span><span>♛</span><span>⚖</span><span>★</span></div>
+            <button type="button" class="world-btn" id="world7Btn" disabled>Vaincre Atlas</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world8Card" data-difficulty="easy" data-world="8" aria-disabled="true">
+          <div class="world-index">08</div><div class="world-symbol">◈</div>
+          <div class="world-content">
+            <span class="tag lock" id="world8Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume du Calcul</h3>
+            <p id="world8Status">Vaincs Fortress pour continuer.</p>
+            <div class="progress-row"><span id="world8Count">0 / 7 missions</span><b id="world8ProgressPct">0%</b></div>
+            <div class="progress"><i id="world8Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>?</span><span>1</span><span>2</span><span>3</span><span>◌</span><span>⚡</span><span>★</span></div>
+            <button type="button" class="world-btn" id="world8Btn" disabled>Vaincre Fortress</button>
+          </div>
+        </article>
+        <article class="world-card locked tilt-card" id="world9Card" data-difficulty="easy" data-world="9" aria-disabled="true">
+          <div class="world-index">09</div><div class="world-symbol">🛡</div>
+          <div class="world-content">
+            <span class="tag lock" id="world9Lock">MONDE VERROUILLÉ</span>
+            <h3>Royaume de la Défense</h3>
+            <p id="world9Status">Vaincs Mirror pour continuer.</p>
+            <div class="progress-row"><span id="world9Count">0 / 7 missions</span><b id="world9ProgressPct">0%</b></div>
+            <div class="progress"><i id="world9Progress" style="width:0%"></i></div>
+            <div class="world-badges"><span>!</span><span>🛡</span><span>↩</span><span>♔</span><span>⛓</span><span>⚔</span><span>★</span></div>
+            <button type="button" class="world-btn" id="world9Btn" disabled>Vaincre Mirror</button>
+          </div>
+        </article>
+<article class="world-card locked tilt-card" id="world10Card" data-difficulty="easy" data-world="10" aria-disabled="true">
+          <div class="world-index">10</div><div class="world-symbol">🏆</div>
+          <div class="world-content"><span class="tag lock" id="world10Lock">MONDE VERROUILLÉ</span><h3>Royaume de la Compétition</h3>
+          <p id="world10Status">Vaincs Aegis pour continuer.</p>
+          <div class="progress-row"><span id="world10Count">0 / 7 missions</span><b id="world10ProgressPct">0%</b></div>
+          <div class="progress"><i id="world10Progress" style="width:0%"></i></div>
+          <button type="button" class="world-btn" id="world10Btn" disabled>Vaincre Aegis</button></div></article>
+<article class="world-card locked tilt-card" id="world11Card" data-difficulty="easy" data-world="11" aria-disabled="true">
+          <div class="world-index">11</div><div class="world-symbol">♛</div>
+          <div class="world-content"><span class="tag lock" id="world11Lock">MONDE VERROUILLÉ</span><h3>Royaume des Maîtres</h3>
+          <p id="world11Status">Vaincs Chronos pour continuer.</p>
+          <div class="progress-row"><span id="world11Count">0 / 7 missions</span><b id="world11ProgressPct">0%</b></div>
+          <div class="progress"><i id="world11Progress" style="width:0%"></i></div>
+          <button type="button" class="world-btn" id="world11Btn" disabled>Vaincre Chronos</button></div></article>
+<article class="world-card locked tilt-card" id="world12Card" data-difficulty="easy" data-world="12" aria-disabled="true">
+          <div class="world-index">12</div><div class="world-symbol">🏰</div>
+          <div class="world-content"><span class="tag lock" id="world12Lock">MONDE VERROUILLÉ</span><h3>La Citadelle</h3>
+          <p id="world12Status">Vaincs Titan pour continuer.</p>
+          <div class="progress-row"><span id="world12Count">0 / 7 missions</span><b id="world12ProgressPct">0%</b></div>
+          <div class="progress"><i id="world12Progress" style="width:0%"></i></div>
+          <button type="button" class="world-btn" id="world12Btn" disabled>Vaincre Titan</button></div></article>
+
+        <article class="world-card locked tilt-card">
+          <div class="world-index">04</div>
+          <div class="world-symbol">♛</div>
+          <div class="world-content">
+            <span class="tag lock">Verrouillé</span>
+            <h3>Royaume du Stratège</h3>
+            <p>Plans, structures, cases fortes, espace et décisions positionnelles.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="training-archive" id="trainingArchive">
+        <div>
+          <span class="eyebrow">ARCHIVES D’ENTRAÎNEMENT</span>
+          <h3>Rejoue les mondes terminés</h3>
+          <p>Les missions et Boss déjà validés restent accessibles en entraînement, sans doubler les récompenses principales.</p>
+        </div>
+        <div class="archive-badges">
+          <span>Monde 01 rejouable</span>
+          <span>Boss rejouable</span>
+          <span>Anti-farming actif</span>
+        </div>
+        <div class="archive-dynamic-summary" id="archiveDynamicSummary">
+          <strong id="archiveCompletedWorlds">0 monde terminé</strong>
+          <span id="archiveReplayHint">Termine un monde pour enrichir les archives.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="defis">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">DÉFIS VIVANTS</div>
+          <h2>Toujours quelque chose à accomplir.</h2>
+        </div>
+        <p>Les défis évoluent en permanence : personnels, saisonniers, tactiques, communautaires et de clan.</p>
+      </div>
+
+      <div class="challenge-grid" id="challengeGrid" aria-live="polite">
+        <article class="challenge-card reveal" data-challenge="daily">
+          <span class="challenge-type">Quotidien</span>
+          <h3>Élan du jour</h3>
+          <p>Valide 3 missions différentes aujourd’hui.</p>
+          <div class="progress-row"><span id="challengeDailyProgress">0 / 3</span><b>+120 XP • +6 ETS</b></div>
+          <div class="progress"><i id="challengeDailyBar" style="width:0%"></i></div>
+          <button type="button" class="challenge-claim" id="challengeDailyClaim" disabled>En cours</button>
+        </article>
+
+        <article class="challenge-card reveal" data-challenge="weekly-ai">
+          <span class="challenge-type">Hebdomadaire</span>
+          <h3>Sans filet</h3>
+          <p>Remporte 3 parties contre l’IA sans demander d’indice.</p>
+          <div class="progress-row"><span id="challengeAIProgress">0 / 3</span><b>+300 XP • +15 ETS</b></div>
+          <div class="progress"><i id="challengeAIBar" style="width:0%"></i></div>
+          <button type="button" class="challenge-claim" id="challengeAIClaim" disabled>En cours</button>
+        </article>
+
+        <article class="challenge-card reveal" data-challenge="weekly-boss">
+          <span class="challenge-type">Campagne</span>
+          <h3>Briseur de Boss</h3>
+          <p>Vaincs un Boss de monde cette semaine.</p>
+          <div class="progress-row"><span id="challengeBossProgress">0 / 1</span><b>+250 XP • +13 ETS</b></div>
+          <div class="progress"><i id="challengeBossBar" style="width:0%"></i></div>
+          <button type="button" class="challenge-claim" id="challengeBossClaim" disabled>En cours</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-panel" id="coach">
+      <div class="coach-layout">
+        <div class="coach-copy reveal">
+          <div class="eyebrow">COACH IA</div>
+          <h2>Il ne te dit pas seulement quoi jouer. Il t'apprend à voir.</h2>
+          <p>
+            EchecTuto observe tes erreurs, repère tes habitudes et construit des entraînements
+            adaptés à ton profil réel.
+          </p>
+          <div class="coach-points">
+            <span>Analyse pédagogique</span>
+            <span>Indices progressifs</span>
+            <span>Révisions ciblées</span>
+            <span>Programme adaptatif</span>
+          </div>
+        </div>
+
+        <div class="coach-card glass reveal">
+          <div class="coach-top">
+            <div class="ai-orb">✦</div>
+            <div>
+              <strong>Coach EchecTuto</strong>
+              <small>Profil synchronisé</small>
+            </div>
+            <span class="live-dot"></span>
+          </div>
+
+          <div class="coach-message" id="coachMessage" aria-live="polite">
+            <p>Ton dernier coup a laissé une pièce vulnérable.</p>
+            <p class="hint">Avant de chercher ton prochain coup, quelle pièce adverse attaque la case d4 ?</p>
+          </div>
+
+          <div class="skill-list" id="coachSkillList">
+            <div><span>Observation</span><i><b id="coachVisionBar" style="width:0%"></b></i><em id="coachVisionValue">0%</em></div>
+            <div><span>Tactique</span><i><b id="coachTacticBar" style="width:0%"></b></i><em id="coachTacticValue">0%</em></div>
+            <div><span>Finales</span><i><b id="coachEndgameBar" style="width:0%"></b></i><em id="coachEndgameValue">0%</em></div>
+          </div>
+
+          <div class="coach-actions">
+            <button type="button" class="secondary-btn full" id="coachBtn">Générer un conseil personnalisé</button>
+            <button type="button" class="secondary-btn full" id="coachLearningBtn">Voir mon profil d’apprentissage</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="clans">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">CLANS & COMPÉTITIONS</div>
+          <h2>Progresse seul. Accomplis davantage ensemble.</h2>
+        </div>
+        <p>Dans cette version Lite, teste localement l’adhésion et la contribution. Les classements multijoueur seront gérés côté serveur dans la version complète.</p>
+      </div>
+
+      <div class="clan-arena reveal" id="clanArena">
+        <div class="clan clan-left" data-clan-id="cavaliers">
+          <div class="clan-emblem">♞</div>
+          <strong>Les Cavaliers d'Or</strong>
+          <span>Clan de démonstration • progression locale</span>
+          <b id="clanCavaliersScore">742</b>
+          <button type="button" class="clan-join-btn" data-clan-join="cavaliers">Rejoindre</button>
+        </div>
+        <div class="versus">
+          <span>CHAMPIONNAT DE CLAN</span>
+          <strong>VS</strong>
+          <small>Mode Lite local — aucun classement serveur simulé</small>
+        </div>
+        <div class="clan clan-right" data-clan-id="tours">
+          <div class="clan-emblem">♜</div>
+          <strong>Les Tours Noires</strong>
+          <span>Clan de démonstration • progression locale</span>
+          <b id="clanToursScore">731</b>
+          <button type="button" class="clan-join-btn" data-clan-join="tours">Rejoindre</button>
+        </div>
+      </div>
+
+      <div class="clan-player-panel glass reveal" id="clanPlayerPanel" aria-live="polite">
+        <div>
+          <span class="eyebrow">TON CLAN</span>
+          <h3 id="clanPlayerName">Aucun clan rejoint</h3>
+          <p id="clanPlayerStatus">Choisis un clan de démonstration. Ton choix est sauvegardé localement dans cette version Lite.</p>
+        </div>
+        <div class="clan-player-stats">
+          <div><span>Contribution</span><strong id="clanContribution">0</strong></div>
+          <div><span>Missions validées</span><strong id="clanMissionContribution">0</strong></div>
+          <div><span>Victoires IA</span><strong id="clanAIContribution">0</strong></div>
+        </div>
+        <button type="button" id="clanLeaveBtn" class="secondary-btn" disabled>Quitter le clan</button>
+      </div>
+    </section>
+
+    <section class="section section-panel" id="jouer">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">JOUER</div>
+          <h2>Première vraie partie contre l'IA.</h2>
+        </div>
+        <p>Déplace les pièces légalement, capture, mets le roi en échec et essaie de gagner contre une IA débutante.</p>
+      </div>
+
+      <div class="play-shell reveal">
+        <div class="game-board-wrap">
+          <div class="game-status-bar">
+            <div>
+              <small>Mode</small>
+              <strong>Entraînement IA</strong>
+            </div>
+            <div>
+              <small>Tour</small>
+              <strong id="turnLabel">Blancs</strong>
+            </div>
+            <div>
+              <small>État</small>
+              <strong id="gameStateLabel" aria-live="polite">Partie en cours</strong>
+            </div>
+          </div>
+
+          <div class="board-premium-frame">
+            <div class="rank-labels">
+              <span>8</span><span>7</span><span>6</span><span>5</span>
+              <span>4</span><span>3</span><span>2</span><span>1</span>
+            </div>
+            <div class="game-board" id="gameBoard"></div>
+            <div class="file-labels">
+              <span>a</span><span>b</span><span>c</span><span>d</span>
+              <span>e</span><span>f</span><span>g</span><span>h</span>
+            </div>
+          </div>
+
+          <div class="team-legend">
+            <div class="legend-team white-team"><span>♙</span><b>Ton équipe</b><small>Blancs ivoire</small></div>
+            <div class="legend-team black-team"><span>♟</span><b>Équipe IA</b><small>Noirs charbon</small></div>
+          </div>
+          <div class="game-controls">
+            <button type="button" id="newGameBtn" class="secondary-btn">Nouvelle partie</button>
+            <button type="button" id="undoBtn" class="secondary-btn">Annuler</button>
+            <button type="button" id="hintGameBtn" class="secondary-btn">Indice Coach</button>
+            <button type="button" id="aiMoveBtn" class="primary-btn">Faire jouer l'IA</button>
+          </div>
+        </div>
+
+        <aside class="game-side glass">
+          <div class="ai-profile">
+            <div class="ai-avatar" id="aiAvatar">♞</div>
+            <div>
+              <span class="eyebrow">ADVERSAIRE</span>
+              <h3 id="aiName">Milo l'Apprenti</h3>
+              <p id="aiDescription">IA débutante — joue des coups légaux simples et privilégie les captures.</p>
+            </div>
+          </div>
+
+          <div class="ai-level-picker">
+            <button type="button" class="ai-level active" data-ai="milo"><b>300</b><span>Milo</span></button>
+            <button type="button" class="ai-level" data-ai="nova"><b>500</b><span>Nova</span></button>
+            <button type="button" class="ai-level" data-ai="guard"><b>700</b><span>Le Garde</span></button>
+          </div>
+
+          <div class="player-progression">
+            <div class="progression-head">
+              <div><small>NIVEAU JOUEUR</small><strong id="playerLevel">1</strong></div>
+              <div><small>XP</small><strong id="playerXp">0</strong></div>
+              <div><small>VICTOIRES IA</small><strong id="aiWins">0</strong></div>
+            </div>
+            <div class="progress"><i id="playerXpBar" style="width:0%"></i></div>
+            <small id="nextLevelText">100 XP avant le niveau 2</small>
+          </div>
+
+          <div class="coach-live" id="gameCoach">
+            <span class="eyebrow">COACH EN PARTIE</span>
+            <p id="gameCoachText" aria-live="polite">Je t'observe. Demande un indice si tu bloques.</p>
+          </div>
+
+          <div class="game-log-wrap">
+            <div class="game-log-head">
+              <strong>Historique</strong>
+              <span id="moveCount">0 coup</span>
+            </div>
+            <div class="game-log" id="gameLog">
+              <p>La partie commence. À toi de jouer.</p>
+            </div>
+          </div>
+
+          <div class="game-help">
+            <strong>Rappel</strong>
+            <p>Clique sur une pièce blanche, puis sur une case surlignée. Les cases rouges indiquent une capture possible.</p>
+          </div>
+
+          <div class="match-objective">
+            <span class="eyebrow">OBJECTIF DE PARTIE</span>
+            <strong id="matchObjectiveTitle">Gagner contre Milo</strong>
+            <p id="matchObjectiveText">Termine la partie sans aide du Coach pour obtenir un bonus de +20 XP.</p>
+            <div class="progress"><i id="matchObjectiveBar" style="width:0%"></i></div>
+            <small id="matchObjectiveState">0 / 1 objectif accompli</small>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <section class="section section-dark" id="boutique">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">BOUTIQUE</div>
+          <h2>Personnalise ton univers. Jamais ta puissance.</h2>
+        </div>
+        <div class="primary-shop-copy-row">
+          <div class="shop-description-currency-row">
+          <p>Échiquiers, pièces, effets, avatars, cadres, thèmes et collections — sans pay-to-win.</p>
+          
+        </div>
+          <button class="primary-shop-open-btn" id="openShopModalBtnPrimary" type="button" data-open-shop="1">Boutique</button>
+        </div><div class="shop-showcase-note">Vitrine d’aperçu — les objets ci-dessous sont achetables uniquement dans la Boutique.</div>
+      </div>
+
+      <div class="shop-grid" id="shopShowcaseGrid">
+        <article class="shop-card reveal">
+          <div class="shop-art frost"><div class="mini-board">♔ ♕ ♖<br/>♙ ♙ ♙</div></div>
+          <div class="shop-info">
+            <span>Rare</span>
+            <h3>Glace Éternelle</h3>
+            <p>Échiquier froid et lumineux disponible dans le catalogue.</p>
+            <button type="button" data-shop-showcase="board-glace-eternelle">Voir • 1 200 ETS</button>
+          </div>
+        </article>
+
+        <article class="shop-card reveal">
+          <div class="shop-art ember"><div class="mini-board">♚ ♛ ♜<br/>♟ ♟ ♟</div></div>
+          <div class="shop-info">
+            <span>Rare</span>
+            <h3>Futuriste</h3>
+            <p>Style technologique lumineux pour ton plateau de jeu.</p>
+            <button type="button" data-shop-showcase="board-futuriste">Voir • 1 800 ETS</button>
+          </div>
+        </article>
+
+        <article class="shop-card reveal">
+          <div class="shop-art aurora"><div class="mini-board">✦ ♔ ✦<br/>♙ ◇ ♙</div></div>
+          <div class="shop-info">
+            <span>Légendaire</span>
+            <h3>Divin</h3>
+            <p>Un des échiquiers les plus rares de la collection actuelle.</p>
+            <button type="button" data-shop-showcase="board-divin">Voir • 3 500 ETS</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section closing">
+      <div class="closing-card reveal">
+        <div class="eyebrow">PREMIÈRE ÉTAPE</div>
+        <h2>Commence par comprendre une case.<br/>Un jour, bats l'IA qui te semblait impossible.</h2>
+        <button type="button" class="primary-btn magnetic" data-scroll="#aventure">Commencer l'aventure <span>→</span></button>
+      </div>
+    </section>
+  
+    </main>
+
+  <nav class="mobile-dock glass" aria-label="Navigation mobile">
+    <a href="#aventure"><span>♟</span><small>Aventure</small></a>
+    <a href="#defis"><span>✦</span><small>Défis</small></a>
+    <a href="#coach"><span>✧</span><small>Coach</small></a>
+    <a href="#jouer"><span>♞</span><small>Jouer</small></a>
+    <a href="#clans"><span>♜</span><small>Clans</small></a>
+    <a href="#boutique" data-open-shop="1"><span>◇</span><small>Boutique</small></a>
+  </nav>
+
+
+  
+  <section class="mission-hub" id="missionHubTwo" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div>
+    <div class="mission-hub-panel glass">
+      <div class="mission-hub-top">
+        <div>
+          <span class="eyebrow">MONDE 02</span>
+          <h2>Premières Batailles</h2>
+          <p>Tu connais les pièces. Maintenant, apprends à les garder en vie et à gagner du matériel.</p>
+        </div>
+        <button type="button" class="close-modal" id="closeMissionHubTwo">×</button>
+      </div>
+      <div class="adventure-route-head">
+        <div><span class="eyebrow">NOUVEAU CHAPITRE</span><strong>4 missions tactiques</strong></div>
+        <div class="chapter-reward"><span>⚔</span><div><small>Objectif</small><strong>Voir les menaces avant qu'elles frappent</strong></div></div>
+      </div>
+      <div class="mission-map" id="missionMapTwo"></div>
+      
+      <div class="world2-boss-card" id="world2BossCard">
+        <div class="boss-emblem">♚</div>
+        <div>
+          <span class="eyebrow">BOSS DU MONDE 02</span>
+          <h3>La Sentinelle des Menaces</h3>
+          <p>Termine les 4 missions de Premières Batailles pour affronter la Sentinelle.</p>
+        </div>
+        <button type="button" id="world2BossBtn" disabled>Boss verrouillé</button>
+      </div>
+
+      <div class="hub-footer">
+        <div><small>Progression du monde</small><strong id="hubProgressTwo">0 / 4 missions</strong></div>
+        <div class="progress"><i id="hubProgressBarTwo" style="width:0%"></i></div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="mission-hub" id="missionHub" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div>
+    <div class="mission-hub-panel glass">
+      <div class="mission-hub-top">
+        <div>
+          <div class="eyebrow">MONDE 01</div>
+          <h2>Royaume de l'Échiquier</h2>
+          <p>Chaque mission validée déverrouille immédiatement la suivante.</p>
+        </div>
+        <button type="button" class="close-modal" id="closeMissionHub">×</button>
+      </div>
+
+      <div class="adventure-route-head">
+        <div>
+          <span class="eyebrow">PARCOURS DU CHAPITRE</span>
+          <strong id="routeStatus">5 étapes + 1 Boss</strong>
+        </div>
+        <div class="chapter-reward">
+          <span>♛</span>
+          <div><small>Récompense de chapitre</small><strong>250 XP + Badge Éclaireur</strong></div>
+        </div>
+      </div>
+
+      <div class="mission-map" id="missionMap"></div>
+
+      <div class="boss-node locked" id="bossNode">
+        <div class="boss-emblem">♚</div>
+        <div>
+          <span class="eyebrow">BOSS DU CHAPITRE</span>
+          <h3>Le Gardien des 64 Cases</h3>
+          <p>Une épreuve complète mêlant coordonnées, mouvements et première situation de partie.</p>
+          <div class="boss-meta">
+            <span>Récompense : +150 XP</span>
+            <span>Débloque : Monde 02</span>
+          </div>
+        </div>
+        <button type="button" id="bossBtn" disabled>Verrouillé</button>
+      </div>
+
+      <div class="hub-footer">
+        <div>
+          <small>Progression du monde</small>
+          <strong id="hubProgress">0 / 5 missions</strong>
+        </div>
+        <div class="progress"><i id="hubProgressBar" style="width:0%"></i></div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="mission-hub" id="missionHubThree" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div>
+    <div class="mission-hub-panel">
+      <div class="mission-hub-head">
+        <div>
+          <span class="eyebrow">MONDE 03</span>
+          <h2>Royaume des Tacticiens</h2>
+          <p>Apprends à repérer les motifs tactiques avant qu’ils ne deviennent évidents.</p>
+        </div>
+        <button type="button" class="icon-btn" id="closeMissionHubThree" aria-label="Fermer">×</button>
+      </div>
+
+      <div class="mission-map" id="missionMapThree"></div>
+
+      <div class="world3-boss-card" id="world3BossCard">
+        <div class="boss-emblem">♚</div>
+        <div>
+          <span class="eyebrow">BOSS DU MONDE 03</span>
+          <h3>Viper, l’Œil Tactique</h3>
+          <p>Termine les 5 missions tactiques pour affronter Viper.</p>
+        </div>
+        <button type="button" id="world3BossBtn" disabled>Boss verrouillé</button>
+      </div>
+
+      <div class="hub-footer">
+        <div><small>Progression du monde</small><strong id="hubProgressThree">0 / 5 missions</strong></div>
+        <div class="progress"><i id="hubProgressBarThree" style="width:0%"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mission-hub" id="missionHubFour" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div>
+    <div class="mission-hub-panel">
+      <div class="mission-hub-head">
+        <div><span class="eyebrow">MONDE 04</span><h2>Royaume du Mat</h2>
+        <p>Apprends à reconnaître l’échec, fermer les cases de fuite et construire le mat.</p></div>
+        <button type="button" class="icon-btn" id="closeMissionHubFour" aria-label="Fermer">×</button>
+      </div>
+      <div class="mission-map" id="missionMapFour"></div>
+      <div class="world4-boss-card" id="world4BossCard">
+        <div class="boss-emblem">♚</div>
+        <div><span class="eyebrow">BOSS DU MONDE 04</span><h3>Le Roi de Fer</h3>
+        <p>Valide les 5 missions pour affronter le maître du mat.</p></div>
+        <button type="button" id="world4BossBtn" disabled>Boss verrouillé</button>
+      </div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressFour">0 / 5 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarFour" style="width:0%"></i></div></div>
+    </div>
+  </div>
+
+  <div class="mission-hub" id="missionHubFive" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+      <div class="mission-hub-head"><div><span class="eyebrow">MONDE 05</span><h2>Royaume du Développement</h2>
+      <p>Apprends à sortir tes pièces, contrôler le centre, mettre ton roi en sécurité et éviter les pertes de temps.</p></div>
+      <button type="button" class="icon-btn" id="closeMissionHubFive" aria-label="Fermer">×</button></div>
+      <div class="mission-map" id="missionMapFive"></div>
+      <div class="world5-boss-card" id="world5BossCard"><div class="boss-emblem">♞</div>
+      <div><span class="eyebrow">BOSS DU MONDE 05</span><h3>Orion, le Commandant</h3>
+      <p>Termine les 6 missions pour prouver que tu sais construire un début de partie sain.</p></div>
+      <button type="button" id="world5BossBtn" disabled>Boss verrouillé</button></div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressFive">0 / 6 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarFive" style="width:0%"></i></div></div>
+    </div></div>
+
+  <div class="mission-hub" id="missionHubSix" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+      <div class="mission-hub-head"><div><span class="eyebrow">MONDE 06</span><h2>Royaume du Stratège</h2>
+      <p>Apprends à construire un plan : structure de pions, cases fortes, colonnes ouvertes, espace et amélioration des pièces.</p></div>
+      <button type="button" class="icon-btn" id="closeMissionHubSix" aria-label="Fermer">×</button></div>
+      <div class="mission-map" id="missionMapSix"></div>
+      <div class="world6-boss-card" id="world6BossCard"><div class="boss-emblem">♛</div>
+      <div><span class="eyebrow">BOSS DU MONDE 06</span><h3>Atlas, l’Architecte</h3>
+      <p>Termine les 6 missions et construis un plan cohérent pour vaincre Atlas.</p></div>
+      <button type="button" id="world6BossBtn" disabled>Boss verrouillé</button></div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressSix">0 / 6 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarSix" style="width:0%"></i></div></div>
+    </div></div>
+
+  <div class="mission-hub" id="missionHubSeven" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+      <div class="mission-hub-head"><div><span class="eyebrow">MONDE 07</span><h2>Royaume des Finales</h2>
+      <p>Quand il reste peu de pièces, chaque case compte. Active ton roi, pousse les bons pions et apprends à convertir un avantage.</p></div>
+      <button type="button" class="icon-btn" id="closeMissionHubSeven" aria-label="Fermer">×</button></div>
+      <div class="mission-map" id="missionMapSeven"></div>
+      <div class="world7-boss-card" id="world7BossCard"><div class="boss-emblem">♔</div>
+      <div><span class="eyebrow">BOSS DU MONDE 07</span><h3>Fortress, le Gardien des Finales</h3>
+      <p>Termine les 7 missions puis prouve que tu sais convertir une finale gagnante.</p></div>
+      <button type="button" id="world7BossBtn" disabled>Boss verrouillé</button></div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressSeven">0 / 7 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarSeven" style="width:0%"></i></div></div>
+    </div></div>
+
+  <div class="mission-hub" id="missionHubEight" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+      <div class="mission-hub-head"><div><span class="eyebrow">MONDE 08</span><h2>Royaume du Calcul</h2>
+      <p>Ne joue plus le premier coup séduisant. Génère des candidats, anticipe la réponse adverse et visualise la position finale avant de décider.</p></div>
+      <button type="button" class="icon-btn" id="closeMissionHubEight" aria-label="Fermer">×</button></div>
+      <div class="mission-map" id="missionMapEight"></div>
+      <div class="world8-boss-card" id="world8BossCard"><div class="boss-emblem">◈</div>
+      <div><span class="eyebrow">BOSS DU MONDE 08</span><h3>Mirror, l’Oracle</h3>
+      <p>Termine les 7 missions. Mirror teste ta capacité à calculer avant de bouger.</p></div>
+      <button type="button" id="world8BossBtn" disabled>Boss verrouillé</button></div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressEight">0 / 7 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarEight" style="width:0%"></i></div></div>
+    </div></div>
+
+  <div class="mission-hub" id="missionHubNine" aria-hidden="true">
+    <div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+      <div class="mission-hub-head"><div><span class="eyebrow">MONDE 09</span><h2>Royaume de la Défense</h2>
+      <p>Repère les menaces avant qu’elles arrivent, neutralise les attaques et transforme une position difficile en contre-jeu.</p></div>
+      <button type="button" class="icon-btn" id="closeMissionHubNine" aria-label="Fermer">×</button></div>
+      <div class="mission-map" id="missionMapNine"></div>
+      <div class="world9-boss-card" id="world9BossCard"><div class="boss-emblem">🛡</div>
+      <div><span class="eyebrow">BOSS DU MONDE 09</span><h3>Aegis, la Sentinelle</h3>
+      <p>Termine les 7 missions. Aegis attaque tes faiblesses et exige une défense active.</p></div>
+      <button type="button" id="world9BossBtn" disabled>Boss verrouillé</button></div>
+      <div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressNine">0 / 7 missions</strong></div>
+      <div class="progress"><i id="hubProgressBarNine" style="width:0%"></i></div></div>
+    </div></div>
+
+  <div class="mission-hub" id="missionHubTen" aria-hidden="true"><div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+<div class="mission-hub-head"><div><span class="eyebrow">MONDE 10</span><h2>Royaume de la Compétition</h2><p>Maîtrise la pression, le temps et la préparation.</p></div><button type="button" class="icon-btn" id="closeMissionHubTen" aria-label="Fermer">×</button></div>
+<div class="mission-map" id="missionMapTen"></div><div class="world-final-boss-card" id="world10BossCard"><div class="boss-emblem">⌛</div><div><span class="eyebrow">BOSS DU MONDE 10</span><h3>Chronos, le Maître du Temps</h3><p>Termine les 7 missions pour accéder à cette épreuve.</p></div><button type="button" id="world10BossBtn" disabled>Boss verrouillé</button></div>
+<div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressTen">0 / 7 missions</strong></div><div class="progress"><i id="hubProgressBarTen" style="width:0%"></i></div></div></div></div>
+<div class="mission-hub" id="missionHubEleven" aria-hidden="true"><div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+<div class="mission-hub-head"><div><span class="eyebrow">MONDE 11</span><h2>Royaume des Maîtres</h2><p>Combine toutes les compétences dans des positions complexes.</p></div><button type="button" class="icon-btn" id="closeMissionHubEleven" aria-label="Fermer">×</button></div>
+<div class="mission-map" id="missionMapEleven"></div><div class="world-final-boss-card" id="world11BossCard"><div class="boss-emblem">♛</div><div><span class="eyebrow">BOSS DU MONDE 11</span><h3>Titan, le Maître</h3><p>Termine les 7 missions pour accéder à cette épreuve.</p></div><button type="button" id="world11BossBtn" disabled>Boss verrouillé</button></div>
+<div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressEleven">0 / 7 missions</strong></div><div class="progress"><i id="hubProgressBarEleven" style="width:0%"></i></div></div></div></div>
+<div class="mission-hub" id="missionHubTwelve" aria-hidden="true"><div class="mission-hub-backdrop"></div><div class="mission-hub-panel">
+<div class="mission-hub-head"><div><span class="eyebrow">MONDE 12</span><h2>La Citadelle</h2><p>Les épreuves finales réunissent tout ce que tu as appris.</p></div><button type="button" class="icon-btn" id="closeMissionHubTwelve" aria-label="Fermer">×</button></div>
+<div class="mission-map" id="missionMapTwelve"></div><div class="world-final-boss-card" id="world12BossCard"><div class="boss-emblem">🏰</div><div><span class="eyebrow">BOSS DU MONDE 12</span><h3>Le Grand Maître de la Citadelle</h3><p>Termine les 7 missions pour accéder à cette épreuve.</p></div><button type="button" id="world12BossBtn" disabled>Boss verrouillé</button></div>
+<div class="hub-footer"><div><small>Progression du monde</small><strong id="hubProgressTwelve">0 / 7 missions</strong></div><div class="progress"><i id="hubProgressBarTwelve" style="width:0%"></i></div></div></div></div>
+<div class="mission-modal" id="missionModal" aria-hidden="true">
+    <div class="mission-backdrop"></div>
+    <div class="mission-sheet glass">
+      <button type="button" class="close-modal" id="closeModal">×</button>
+      <div class="eyebrow" id="missionEyebrow">MISSION 1</div>
+      <h2 id="missionTitle">Le langage de l'échiquier</h2>
+      <p id="missionDescription">Découvre comment les 64 cases deviennent une carte que tu peux lire instantanément.</p>
+
+      <div class="mission-demo">
+        <div class="mission-runtime-bar" id="missionRuntimeBar">
+          <div class="runtime-item lives"><span>Vies</span><strong id="missionLives">♥ ♥ ♥</strong></div>
+          <div class="runtime-item timer" id="missionTimerItem"><span id="missionTimerLabel">Compte à rebours</span><strong id="missionTimer">02:00</strong></div>
+        </div><div class="demo-board" id="demoBoard"></div>
+        <div class="demo-copy">
+          <strong id="missionObjectiveLabel">Objectif</strong>
+          <span id="missionObjective">Analyse la position et trouve le meilleur choix.</span>
+          <small id="missionStatus">Clique sur la bonne case.</small>
+        </div>
+      </div>
+
+      <div class="mission-footer">
+        <span id="missionReward">Récompense : +50 XP</span>
+        <div class="mission-actions">
+          <button type="button" id="resetMission">Recommencer</button>
+          <button type="button" id="nextMission" class="next-mission-btn" disabled>Mission suivante →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="postgame-modal" id="postGameModal" aria-hidden="true">
+    <div class="postgame-backdrop"></div>
+    <div class="postgame-card glass" role="dialog" aria-modal="true" aria-labelledby="postGameTitle">
+      <button type="button" class="close-modal" id="closePostGame" aria-label="Fermer le bilan">×</button>
+      <div class="postgame-crown" id="postGameIcon">♔</div>
+      <span class="eyebrow">BILAN DE PARTIE</span>
+      <h2 id="postGameTitle">Victoire !</h2>
+      <p id="postGameSubtitle">Le Coach IA a analysé les éléments principaux de ta partie.</p>
+
+      <div class="postgame-stats">
+        <div><small>Résultat</small><strong id="pgResult">Victoire</strong></div>
+        <div><small>Coups</small><strong id="pgMoves">0</strong></div>
+        <div><small>Captures</small><strong id="pgCaptures">0</strong></div>
+        <div><small>XP gagnée</small><strong id="pgXp">+0</strong></div><div><small>ETS gagnés</small><strong id="pgCoins">+0</strong></div>
+      </div>
+
+      <div class="postgame-analysis">
+        <div class="analysis-card">
+          <span>✦</span>
+          <div><small>Point fort</small><strong id="pgStrength">—</strong></div>
+        </div>
+        <div class="analysis-card">
+          <span>◎</span>
+          <div><small>À travailler</small><strong id="pgWeakness">—</strong></div>
+        </div>
+        <div class="analysis-card wide">
+          <span>♛</span>
+          <div><small>Mission recommandée</small><strong id="pgRecommendation">—</strong></div>
+        </div>
+      </div>
+
+      <div class="postgame-actions">
+        <button type="button" class="secondary-btn" id="reviewGameBtn">Voir les coups</button>
+        <button type="button" class="primary-btn" id="nextChallengeBtn">Défi suivant</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="promotion-picker" id="promotionPicker" aria-hidden="true">
+    <button type="button" data-piece="Q">♕</button><button type="button" data-piece="R">♖</button>
+    <button type="button" data-piece="B">♗</button><button type="button" data-piece="N">♘</button>
+  </div>
+<div class="reward-modal" id="rewardModal" aria-hidden="true">
+  <div class="reward-modal-backdrop" id="rewardModalBackdrop"></div>
+  <div class="reward-modal-panel" role="dialog" aria-modal="true" aria-labelledby="rewardModalTitle">
+    <button type="button" class="reward-modal-close" id="rewardModalClose" aria-label="Fermer">×</button>
+    <div class="reward-burst">✦</div>
+    <span class="eyebrow">VICTOIRE</span>
+    <h2 id="rewardModalTitle">Félicitations, vous avez gagné !</h2>
+    <p id="rewardModalMessage">Mission réussie.</p>
+    <div class="reward-earned-list" id="rewardEarnedList"></div>
+    <div class="reward-total-preview">
+      <span>Totaux mis à jour</span>
+      <div>
+        <b>XP <strong data-economy="xp">0</strong></b>
+        <b>🪙 <strong data-economy="coins">0</strong></b>
+        <b>★ <strong data-economy="stars">0</strong></b>
+      </div>
+    </div>
+    <button type="button" class="reward-confirm-btn" id="rewardConfirmBtn">Continuer</button>
+  </div>
+</div>
+
+<div class="shop-modal" id="shopModal" aria-hidden="true">
+  <div class="shop-modal-backdrop" id="shopModalBackdrop"></div>
+  <div class="shop-modal-panel" role="dialog" aria-modal="true" aria-labelledby="shopModalTitle">
+    <div class="shop-modal-head">
+      <div>
+        <span class="eyebrow">BOUTIQUE</span>
+        <h2 id="shopModalTitle">La Boutique EchecTuto</h2>
+        <p>Échiquiers, pièces, effets, avatars, cadres, thèmes et collections — sans pay-to-win.</p>
+      </div>
+      <div class="shop-equipped-summary">Plateau actif : <strong data-active-board-label>Classique Bois</strong></div>
+<div class="shop-balance-box" aria-label="Solde du joueur">
+        <span>Solde</span>
+        <strong id="shopETSBalance">0 ETS</strong>
+      </div>
+      <button type="button" class="shop-modal-close" id="shopModalClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="shop-alert-message" id="shopAlertMessage" role="status" aria-live="polite"></div>
+    <div id="shopPurchaseNotice" class="shop-purchase-notice" role="status" aria-live="assertive"></div>
+    <div class="shop-board-tools" id="shopBoardTools">
+      <div class="shop-collection-progress">
+        <div class="shop-collection-progress-head">
+          <span>Collection d’échiquiers</span>
+          <strong id="shopCollectionProgressText">1 / 12</strong>
+        </div>
+        <div class="shop-collection-progress-track"><i id="shopCollectionProgressBar"></i></div>
+      </div>
+      
+      <div class="shop-search-row">
+        <label class="shop-search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="shopBoardSearch" type="search" placeholder="Rechercher un échiquier…" autocomplete="off" aria-label="Rechercher un échiquier">
+        </label>
+        <div class="shop-stat-pills" aria-label="Statistiques de la boutique">
+          <span id="shopStatOwned">0 possédés</span>
+          <span id="shopStatAffordable">0 accessibles</span>
+          <span id="shopStatLegendary">0 légendaires</span>
+        </div>
+      </div>
+      <div class="shop-rarity-row" role="group" aria-label="Filtrer par rareté">
+        <button type="button" class="shop-rarity-filter active" data-rarity-filter="all">Toutes raretés</button>
+        <button type="button" class="shop-rarity-filter" data-rarity-filter="Commun">Commun</button>
+        <button type="button" class="shop-rarity-filter" data-rarity-filter="Rare">Rare</button>
+        <button type="button" class="shop-rarity-filter" data-rarity-filter="Épique">Épique</button>
+        <button type="button" class="shop-rarity-filter" data-rarity-filter="Légendaire">Légendaire</button>
+        <button type="button" class="shop-affordable-toggle" id="shopAffordableToggle" aria-pressed="false">Solde suffisant</button>
+        <button type="button" class="shop-affordable-toggle" id="shopHideOwnedToggle" aria-pressed="false">Masquer possédés</button>
+        <select id="shopPriceRange" class="shop-price-range" aria-label="Filtrer par prix">
+          <option value="all">Tous les prix</option>
+          <option value="0-1000">0–1 000 ETS</option>
+          <option value="1001-2000">1 001–2 000 ETS</option>
+          <option value="2001-3000">2 001–3 000 ETS</option>
+          <option value="3001+">3 001 ETS et +</option>
+        </select>
+        <button type="button" class="shop-discover-btn" id="shopDiscoverBtn">Découverte aléatoire</button>
+      </div>
+<div class="shop-filter-row" role="group" aria-label="Filtres des échiquiers">
+        <button type="button" class="shop-filter active" data-shop-filter="all">Tous</button>
+        <button type="button" class="shop-filter" data-shop-filter="available">À acheter</button>
+        <button type="button" class="shop-filter" data-shop-filter="owned">Possédés</button>
+        <button type="button" class="shop-filter" data-shop-filter="favorites">Favoris</button>
+        <select id="shopBoardSort" class="shop-sort" aria-label="Trier les échiquiers">
+          <option value="smart">Pertinence</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+        </select>
+        <button type="button" class="shop-history-btn" id="shopHistoryBtn">Historique</button>
+      </div>
+    </div>
+<div class="shop-insight-strip">
+      <div class="shop-recently-viewed">
+        <strong>Consultés récemment</strong>
+        <div id="shopRecentList" class="shop-recent-list"></div>
+      </div>
+      <div class="shop-milestones">
+        <strong>Collection</strong>
+        <div id="shopMilestoneList" class="shop-milestone-list"></div>
+      </div>
+    </div>
+<div class="shop-history-panel" id="shopHistoryPanel" aria-hidden="true">
+      <div class="shop-history-head">
+        <strong>Historique des achats</strong>
+        <button type="button" id="shopHistoryClose" aria-label="Fermer l’historique">×</button>
+      </div>
+      <div id="shopHistoryList" class="shop-history-list"></div>
+    </div>
+    <div class="shop-board-detail" id="shopBoardDetail" aria-hidden="true"></div>
+    <div class="shop-receipt" id="shopReceipt" aria-hidden="true">
+      <button type="button" class="shop-receipt-close" id="shopReceiptClose" aria-label="Fermer le reçu">×</button>
+      <small>Reçu d’achat</small>
+      <strong id="shopReceiptTitle">—</strong>
+      <div id="shopReceiptDetails"></div>
+    </div>
+
+    <div class="shop-live-preview" id="shopLivePreview" aria-hidden="true">
+      <span>Aperçu temporaire</span>
+      <strong id="shopLivePreviewName">—</strong>
+      <button type="button" id="shopLivePreviewRestore">Revenir au plateau équipé</button>
+    </div>
+
+    <aside class="shop-compare-tray" id="shopCompareTray" aria-hidden="true">
+      <div class="shop-compare-head">
+        <div><small>COMPARAISON</small><strong>Jusqu’à 3 échiquiers</strong></div>
+        <button type="button" id="shopCompareClear">Vider</button>
+      </div>
+      <div class="shop-compare-list" id="shopCompareList"></div>
+    </aside>
+
+
+    <div class="shop-modal-grid" id="shopModalGrid"></div>
+    <div class="shop-message" id="shopModalMessage">Sélectionne un objet.</div>
+  </div>
+</div>
+  
+
+<div class="profile-modal" id="profileModal" aria-hidden="true"><div class="profile-modal-backdrop" id="profileModalBackdrop"></div>
+  <div class="profile-modal-panel" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+    <button type="button" class="profile-modal-close" id="profileModalClose" aria-label="Fermer">×</button>
+    <span class="eyebrow">PROFIL JOUEUR</span>
+    <h2 id="profileModalTitle">Ton profil EchecTuto</h2>
+    <div class="profile-summary-grid">
+      <div><span>Niveau</span><strong id="profileLevelValue">1</strong></div>
+      <div><span>XP cumulée</span><strong data-economy="xp">0</strong></div>
+      <div><span>ETS</span><strong data-economy="coins">0</strong></div>
+      <div><span>Étoiles</span><strong data-economy="stars">0</strong></div>
+    </div>
+    <div class="profile-detail-list">
+      <div><span>Difficulté actuelle</span><strong>Facile</strong></div>
+      <div><span>Campagne</span><strong>12 mondes</strong></div>
+      <div><span>Progression</span><strong id="profileProgressValue">En cours</strong></div>
+      <div><span>Style</span><strong id="profileEquippedValue">Équipement actif</strong></div>
+    </div>
+    <div class="inventory-special-actions inventory-special-actions-fallback">
+      <button type="button" id="openCollectionCenterBtn" class="inventory-action-card">
+        <span class="inventory-action-icon">♛</span>
+        <span><strong>Collection</strong><small>Centre de collection</small></span>
+      </button>
+      <button type="button" id="openFavoritesCenterBtn" class="inventory-action-card">
+        <span class="inventory-action-icon">★</span>
+        <span><strong>Favoris</strong><small>Envies, activité, recommandations</small></span>
+      </button>
+    </div>
+    <button type="button" class="profile-learning-open" id="openLearningCenterBtn">
+      <span>🧠</span>
+      <div><strong>Centre d’apprentissage</strong><small>Maîtrise, erreurs, révisions et recommandations</small></div>
+      <b>→</b>
+    </button>
+  </div>
+</div>
+  
+
+<div class="learning-center-modal" id="learningCenterModal" aria-hidden="true">
+  <div class="learning-center-backdrop" id="learningCenterBackdrop"></div>
+  <section class="learning-center-window" role="dialog" aria-modal="true" aria-labelledby="learningCenterTitle">
+    <header class="learning-center-head">
+      <div>
+        <small>PROFIL D’APPRENTISSAGE</small>
+        <h2 id="learningCenterTitle">Centre d’apprentissage</h2>
+        <p>Ce tableau évolue automatiquement selon tes victoires, tes défaites et tes révisions.</p>
+      </div>
+      <button type="button" id="learningCenterClose" aria-label="Fermer">×</button>
+    </header>
+
+    <div class="learning-center-overview">
+      <article><span>Maîtrise globale</span><strong id="learningOverallMastery">0%</strong><i><b id="learningOverallBar"></b></i></article>
+      <article><span>Parties analysées</span><strong id="learningAnalyzedCount">0</strong><small id="learningWinRate">0% réussite</small></article>
+      <article><span>Révisions à faire</span><strong id="learningReviewCount">0</strong><small id="learningReviewNext">Aucune urgence</small></article>
+      <article><span>Série d’apprentissage</span><strong id="learningStudyStreak">1 jour</strong><small id="learningStudyStatus">Continue aujourd’hui</small></article>
+    </div>
+
+    <div class="learning-center-layout">
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>CARTE DES COMPÉTENCES</small><strong>Maîtrise par domaine</strong></div><span id="learningStrongestSkill">—</span></div>
+        <div class="learning-skill-list" id="learningSkillList"></div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>DIAGNOSTIC</small><strong>Forces et faiblesses</strong></div><span id="learningWeakestSkill">—</span></div>
+        <div class="learning-diagnostic-cards">
+          <article><span>Point fort</span><strong id="learningStrengthTitle">—</strong><p id="learningStrengthText">Joue quelques parties pour construire ton profil.</p></article>
+          <article><span>Priorité</span><strong id="learningWeaknessTitle">—</strong><p id="learningWeaknessText">Les priorités apparaîtront ici.</p></article>
+        </div>
+      </section>
+
+      <section class="learning-center-panel learning-review-panel">
+        <div class="learning-center-panel-head"><div><small>RÉVISION ESPACÉE</small><strong>À revoir prochainement</strong></div><button type="button" id="learningReviewAllBtn">Réviser maintenant</button></div>
+        <div class="learning-review-list" id="learningReviewList"></div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>ERREURS RÉCURRENTES</small><strong>Habitudes à corriger</strong></div><span id="learningPatternCount">0 tendance</span></div>
+        <div class="learning-pattern-list" id="learningPatternList"></div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>PROCHAINE ÉTAPE</small><strong>Parcours conseillé</strong></div><span id="learningDifficultyAdvice">Facile</span></div>
+        <div class="learning-next-card">
+          <span id="learningNextIcon">◎</span>
+          <div><strong id="learningNextTitle">Continuer la campagne</strong><p id="learningNextText">Poursuis les missions du niveau actuel.</p></div>
+          <button type="button" id="learningNextAction">Y aller</button>
+        </div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>OBJECTIFS</small><strong>Objectifs personnels automatiques</strong></div><span id="learningGoalStatus">0 / 3</span></div>
+        <div class="learning-goal-list" id="learningGoalList"></div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>HISTORIQUE</small><strong>Derniers débriefs</strong></div><span>Conservé automatiquement</span></div>
+        <div class="learning-history-list" id="learningHistoryList"></div>
+      </section>
+
+      <section class="learning-center-panel">
+        <div class="learning-center-panel-head"><div><small>PROGRESSION</small><strong>Évolution récente</strong></div><span id="learningTrendLabel">Stable</span></div>
+        <div class="learning-trend" id="learningTrendBars"></div>
+      </section>
+    </div>
+  </section>
+</div>
+
+
+
+<div class="inventory-overlay-modal" id="collectionCenterModal" aria-hidden="true">
+  <div class="inventory-overlay-backdrop" data-close-inventory-window="collection"></div>
+  <section class="inventory-window collection-window" role="dialog" aria-modal="true" aria-labelledby="collectionCenterTitle">
+    <header class="inventory-window-head">
+      <div><small>Inventaire du joueur</small><h2 id="collectionCenterTitle">Collection</h2></div>
+      <button type="button" class="inventory-window-close" id="collectionCenterClose" aria-label="Fermer">×</button>
+    </header>
+    <section class="shop-advanced-panel" id="collectionCenterPanel" aria-label="Centre de collection">
+      <div class="shop-advanced-head">
+        <div><small>Centre de collection</small><strong>Ma collection d’échiquiers</strong></div>
+        <button type="button" id="collectionCenterToggle" aria-expanded="true">Réduire</button>
+      </div>
+      <div class="shop-advanced-body" id="collectionCenterBody">
+        <div class="shop-kpi-grid">
+          <div><span>Valeur collection</span><strong id="shopCollectionValue">0 ETS</strong></div>
+          <div><span>Rareté moyenne</span><strong id="shopAverageRarity">—</strong></div>
+          <div><span>Prochain objectif</span><strong id="shopNextGoal">25 %</strong></div>
+          <div><span>Budget après achat</span><strong id="shopBudgetProjection">—</strong></div>
+        </div>
+        <div class="shop-quick-actions">
+          <button type="button" data-quick-shop="cheapest">Moins cher</button>
+          <button type="button" data-quick-shop="rare">Plus rare</button>
+          <button type="button" data-quick-shop="favorite">Un favori</button>
+          <button type="button" data-quick-shop="affordable">Achetable maintenant</button>
+          <button type="button" id="shopClearSearch">Effacer recherche</button>
+        </div>
+        <div class="shop-owned-gallery" id="shopOwnedGallery"></div>
+      </div>
+    </section>
+  </section>
+</div>
+
+<div class="inventory-overlay-modal" id="favoritesCenterModal" aria-hidden="true">
+  <div class="inventory-overlay-backdrop" data-close-inventory-window="favorites"></div>
+  <section class="inventory-window favorites-window" role="dialog" aria-modal="true" aria-labelledby="favoritesCenterTitle">
+    <header class="inventory-window-head">
+      <div><small>Inventaire du joueur</small><h2 id="favoritesCenterTitle">Favoris</h2></div>
+      <button type="button" class="inventory-window-close" id="favoritesCenterClose" aria-label="Fermer">×</button>
+    </header>
+    <div class="favorites-window-grid">
+      <section class="favorites-window-card">
+        <strong>Liste d’envies</strong>
+        <div id="shopWishlistSummary"></div>
+      </section>
+      <section class="favorites-window-card">
+        <strong>Recommandation</strong>
+        <div id="shopRecommendation"></div>
+      </section>
+      <section class="favorites-window-card favorites-activity-card">
+        <strong>Activité</strong>
+        <div id="shopActivityFeed"></div>
+      </section>
+    </div>
+  </section>
+</div>
+
+<div class="mission-defeat-overlay" id="missionDefeatOverlay" aria-hidden="true">
+  <div class="mission-defeat-backdrop" id="missionDefeatBackdrop"></div>
+  <section class="mission-defeat-card" role="dialog" aria-modal="true" aria-labelledby="missionDefeatTitle">
+    <div class="mission-defeat-symbol">♚</div>
+    <small>DÉFAITE</small>
+    <h3 id="missionDefeatTitle">La partie n’est pas terminée.</h3>
+    <p id="missionDefeatMessage">Observe la position, corrige ton choix et recommence.</p>
+    <button type="button" id="missionDefeatRetry">Voir le débrief</button>
+  </section>
+</div>
+
+<div class="learning-debrief-modal" id="learningDebriefModal" aria-hidden="true">
+  <div class="learning-debrief-backdrop" id="learningDebriefBackdrop"></div>
+  <section class="learning-debrief-card" role="dialog" aria-modal="true" aria-labelledby="learningDebriefTitle">
+    <header class="learning-debrief-head">
+      <div>
+        <small id="learningDebriefEyebrow">DÉBRIEF PÉDAGOGIQUE</small>
+        <h3 id="learningDebriefTitle">Ce que tu peux retenir</h3>
+      </div>
+      <button type="button" id="learningDebriefClose" aria-label="Fermer">×</button>
+    </header>
+
+    <div class="learning-debrief-result" id="learningDebriefResult">
+      <span id="learningDebriefResultIcon">✓</span>
+      <div>
+        <strong id="learningDebriefResultTitle">Mission réussie</strong>
+        <p id="learningDebriefSummary">Voici ce que cette position t’a appris.</p>
+      </div>
+    </div>
+
+    <div class="learning-debrief-grid">
+      <section>
+        <small>CE QUI S’EST PASSÉ</small>
+        <h4>Comprendre la position</h4>
+        <p id="learningDebriefWhy"></p>
+      </section>
+      <section>
+        <small>À RETENIR</small>
+        <h4>Principe clé</h4>
+        <p id="learningDebriefLesson"></p>
+      </section>
+      <section id="learningDebriefStrengthsPanel">
+        <small>POINT POSITIF</small>
+        <h4>Ce que tu as bien fait</h4>
+        <p id="learningDebriefStrengths"></p>
+      </section>
+      <section id="learningDebriefSolutionsPanel">
+        <small>APPROCHES DE SOLUTION</small>
+        <h4>Comment progresser au prochain essai</h4>
+        <ol id="learningDebriefSolutions"></ol>
+      </section>
+    </div>
+
+
+    <section class="learning-debrief-advanced" id="learningDebriefAdvanced">
+      <div class="learning-debrief-advanced-head">
+        <div><small>ANALYSE PERSONNALISÉE</small><strong>Ce que cette partie révèle</strong></div>
+        <span id="learningDebriefSkillTag">Observation</span>
+      </div>
+
+      <div class="learning-debrief-metrics">
+        <article>
+          <span>Compétence travaillée</span>
+          <strong id="learningDebriefSkill">Observation</strong>
+        </article>
+        <article>
+          <span>Erreur probable</span>
+          <strong id="learningDebriefErrorType">—</strong>
+        </article>
+        <article>
+          <span>Gestion du temps</span>
+          <strong id="learningDebriefTimeQuality">Correcte</strong>
+        </article>
+        <article>
+          <span>Priorité suivante</span>
+          <strong id="learningDebriefPriority">Vérifier les menaces</strong>
+        </article>
+      </div>
+
+      <div class="learning-debrief-diagnostic">
+        <section>
+          <small>ERREUR RÉCURRENTE</small>
+          <h4 id="learningDebriefRecurringTitle">Aucune tendance détectée</h4>
+          <p id="learningDebriefRecurringText">Continue à jouer pour permettre au Coach d’identifier des habitudes.</p>
+        </section>
+        <section>
+          <small>EXERCICE CONSEILLÉ</small>
+          <h4 id="learningDebriefRecommendedExercise">Mission ciblée</h4>
+          <p id="learningDebriefRecommendedWhy">Un exercice adapté sera proposé selon cette partie.</p>
+          <button type="button" id="learningDebriefStartExercise">Lancer l’entraînement conseillé</button>
+        </section>
+      </div>
+
+      <div class="learning-debrief-checklist">
+        <small>CHECKLIST À RETENIR</small>
+        <div id="learningDebriefChecklist"></div>
+      </div>
+    </section>
+
+    <div class="learning-debrief-next">
+      <strong id="learningDebriefNextTitle">Prochaine habitude</strong>
+      <p id="learningDebriefNextText"></p>
+    </div>
+
+    <footer>
+      <button type="button" class="secondary-btn" id="learningDebriefReview">Revoir la position</button>
+      <button type="button" class="primary-btn" id="learningDebriefContinue">Continuer</button>
+    </footer>
+  </section>
+</div>
+  <script src="app.js"></script>
+</body>
+</html>

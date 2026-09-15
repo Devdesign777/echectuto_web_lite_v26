@@ -1,0 +1,10 @@
+{
+  "name": "EchecTuto",
+  "short_name": "EchecTuto",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090b11",
+  "theme_color": "#090b11",
+  "description": "Prototype web immersif, responsive et multi-thèmes d'EchecTuto.",
+  "icons": []
+}
