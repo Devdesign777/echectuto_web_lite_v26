@@ -128,3 +128,17 @@ export function validateMissionEvidence({mission, evidence}){
   if(objective==='convert_endgame_advantage'){ const moved=mission.position[move.from]; if(!moved || PIECES[moved][1]!=='king') return {passed:false,reason:'king_required'}; const friendlyPawn=Object.entries(finalPosition).find(([,p])=>p===(mission.sideToMove==='white'?'♙':'♟')); if(!friendlyPawn) return {passed:false,reason:'friendly_pawn_missing'}; const [pawnSq]=friendlyPawn,[kx,ky]=coords(move.to),[px,py]=coords(pawnSq); if(Math.max(Math.abs(kx-px),Math.abs(ky-py))>1) return {passed:false,reason:'king_not_supporting_pawn'}; }
   return {passed:true,reason:'validated',finalPosition};
 }
+
+/** Validate a fully specified authoritative line, alternating sides after every ply. */
+export function validateAuthoritativeLine({ position, sideToMove, expectedLine, evidenceLine }){
+  if(!Array.isArray(expectedLine) || expectedLine.length===0) throw new Error('expectedLine is required');
+  if(!Array.isArray(evidenceLine) || evidenceLine.length!==expectedLine.length) return {passed:false,reason:'line_length_mismatch'};
+  let current=normalizePosition(position); let side=sideToMove;
+  for(let i=0;i<expectedLine.length;i++){
+    const expected=expectedLine[i], actual=evidenceLine[i];
+    if(!actual || actual.from!==expected.from || actual.to!==expected.to || (actual.promotion??null)!==(expected.promotion??null)) return {passed:false,reason:'line_mismatch',ply:i+1};
+    if(!isLegalMove(current,actual,side)) return {passed:false,reason:'illegal_line_move',ply:i+1};
+    current=applyMove(current,actual); side=side==='white'?'black':'white';
+  }
+  return {passed:true,reason:'line_validated',finalPosition:current,plies:expectedLine.length};
+}
