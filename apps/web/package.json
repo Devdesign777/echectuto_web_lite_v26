@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:server": "node --test tests/server/*.test.mjs"
+    "test:server": "node --test tests/server/*.test.mjs",
+    "test:sync": "node --test tests/sync/*.test.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",
