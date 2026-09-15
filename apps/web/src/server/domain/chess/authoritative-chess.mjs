@@ -51,7 +51,7 @@ export function applyMove(position, move){
   if(move.promotion){ const color=PIECES[piece][0]; const map={queen:['♕','♛'],rook:['♖','♜'],bishop:['♗','♝'],knight:['♘','♞']}; next[move.to]=map[move.promotion][color==='white'?0:1]; }
   return normalizePosition(next);
 }
-function attackedBy(position, target, attacker){
+export function isSquareAttacked(position, target, attacker){
   for(const [from,piece] of Object.entries(position)){
     if(PIECES[piece][0]!==attacker) continue;
     const type=PIECES[piece][1]; const [fx,fy]=coords(from),[tx,ty]=coords(target),dx=tx-fx,dy=ty-fy,ax=Math.abs(dx),ay=Math.abs(dy);
@@ -59,10 +59,28 @@ function attackedBy(position, target, attacker){
     if(type!=='pawn' && pseudoLegal(position,{from,to:target},attacker)) return true;
   } return false;
 }
+export function isInCheck(position, side){
+  const p=normalizePosition(position); const kingPiece=side==='white'?'♔':'♚'; const king=Object.keys(p).find(s=>p[s]===kingPiece);
+  if(!king) return false; return isSquareAttacked(p,king,side==='white'?'black':'white');
+}
+export function legalMoves(position, side){
+  const p=normalizePosition(position), out=[];
+  for(const [from,piece] of Object.entries(p)){
+    if(PIECES[piece][0]!==side) continue;
+    for(const f of FILES) for(let r=1;r<=8;r++){
+      const to=`${f}${r}`; if(from===to) continue;
+      const base={from,to};
+      if(PIECES[piece][1]==='pawn' && (r===1||r===8)){ for(const promotion of ['queen','rook','bishop','knight']) if(isLegalMove(p,{...base,promotion},side)) out.push({...base,promotion}); }
+      else if(isLegalMove(p,base,side)) out.push(base);
+    }
+  }
+  return out;
+}
+export function isCheckmate(position, side){ return isInCheck(position,side) && legalMoves(position,side).length===0; }
 export function isLegalMove(position, move, side){
   const p=normalizePosition(position); if(!['white','black'].includes(side)||!pseudoLegal(p,move,side)) return false;
   const next=applyMove(p,move); const kingPiece=side==='white'?'♔':'♚'; const king=Object.keys(next).find(s=>next[s]===kingPiece);
-  if(!king) return false; return !attackedBy(next,king,side==='white'?'black':'white');
+  if(!king) return false; return !isSquareAttacked(next,king,side==='white'?'black':'white');
 }
 export function validateMissionEvidence({mission, evidence}){
   if(!mission?.id || !mission.position || !mission.expectedMove) throw new Error('invalid mission definition');
@@ -71,5 +89,10 @@ export function validateMissionEvidence({mission, evidence}){
   const move=evidence.move; if(!isLegalMove(mission.position,move,mission.sideToMove)) return {passed:false,reason:'illegal_move'};
   const e=mission.expectedMove;
   if(move.from!==e.from||move.to!==e.to||(move.promotion??null)!==(e.promotion??null)) return {passed:false,reason:'objective_not_met'};
-  return {passed:true,reason:'validated',finalPosition:applyMove(mission.position,move)};
+  const finalPosition=applyMove(mission.position,move);
+  const objective=mission.objective ?? 'exact_move'; const opponent=mission.sideToMove==='white'?'black':'white';
+  if(objective==='escape_check' && isInCheck(finalPosition,mission.sideToMove)) return {passed:false,reason:'king_still_in_check'};
+  if(objective==='give_check' && !isInCheck(finalPosition,opponent)) return {passed:false,reason:'check_not_delivered'};
+  if(objective==='mate_in_one' && !isCheckmate(finalPosition,opponent)) return {passed:false,reason:'mate_not_delivered'};
+  return {passed:true,reason:'validated',finalPosition};
 }

@@ -11,6 +11,11 @@ const RAW_MISSIONS = [
   { id:'world3-3', world:3, order:3, title:"L’enfilade", kind:'chess_move', status:'draft', rewardXp:160, definition:{sideToMove:'white',position:{e1:'♖',e8:'♚',e7:'♛',a8:'♜',g1:'♔'},expectedMove:{from:'e1',to:'e6'}} },
   { id:'world3-4', world:3, order:4, title:'Attaque découverte', kind:'chess_move', status:'draft', rewardXp:170, definition:{sideToMove:'white',position:{b1:'♗',d3:'♘',h7:'♛',e8:'♚',e1:'♔'},expectedMove:{from:'d3',to:'f4'}} },
   { id:'world3-5', world:3, order:5, title:'Tactique ou calme ?', kind:'chess_move', status:'draft', rewardXp:190, definition:{sideToMove:'white',position:{g1:'♔',d1:'♕',a1:'♖',f3:'♘',g2:'♙',h2:'♙',g8:'♚',d8:'♛'},expectedMove:{from:'h2',to:'h3'}} },
+  { id:'world4-1', world:4, order:1, title:'Reconnaître l’échec', kind:'chess_move', status:'certified', rewardXp:180, definition:{sideToMove:'white',objective:'escape_check',position:{e1:'♔',a1:'♖',e8:'♜',a8:'♚'},expectedMove:{from:'e1',to:'f2'}} },
+  { id:'world4-2', world:4, order:2, title:'Fermer une fuite', kind:'chess_move', status:'certified', rewardXp:190, definition:{sideToMove:'white',objective:'mate_in_one',position:{f6:'♔',g6:'♕',h8:'♚'},expectedMove:{from:'g6',to:'g7'}} },
+  { id:'world4-3', world:4, order:3, title:'Mat de la dernière rangée', kind:'chess_move', status:'certified', rewardXp:210, definition:{sideToMove:'white',objective:'mate_in_one',position:{g1:'♔',e1:'♖',g8:'♚',f7:'♟',g7:'♟',h7:'♟'},expectedMove:{from:'e1',to:'e8'}} },
+  { id:'world4-4', world:4, order:4, title:'Dame et roi coordonnés', kind:'chess_move', status:'certified', rewardXp:230, definition:{sideToMove:'white',objective:'mate_in_one',position:{f6:'♔',e7:'♕',h8:'♚'},expectedMove:{from:'e7',to:'g7'}} },
+  { id:'world4-5', world:4, order:5, title:'Mat en un', kind:'chess_move', status:'certified', rewardXp:260, definition:{sideToMove:'white',objective:'mate_in_one',position:{f7:'♔',d3:'♗',g1:'♖',h8:'♚'},expectedMove:{from:'g1',to:'g8'}} },
 ];
 
 function deepFreeze(value){ if(value && typeof value==='object' && !Object.isFrozen(value)){ Object.freeze(value); for(const v of Object.values(value)) deepFreeze(v); } return value; }
@@ -23,5 +28,5 @@ export function getMission(id, version=1){ return MISSION_CATALOG.find(m=>m.id==
 export function getCertifiedMission(id, version=1){ const m=getMission(id,version); return m?.status==='certified' ? m : null; }
 export function toChessValidationMission(catalogMission){
   if(!catalogMission || catalogMission.kind!=='chess_move' || catalogMission.status!=='certified') throw new Error('mission is not certified for chess validation');
-  const d=catalogMission.definition; return {id:catalogMission.id,sideToMove:d.sideToMove,position:d.position,expectedMove:d.expectedMove};
+  const d=catalogMission.definition; return {id:catalogMission.id,sideToMove:d.sideToMove,position:d.position,expectedMove:d.expectedMove,objective:d.objective};
 }
