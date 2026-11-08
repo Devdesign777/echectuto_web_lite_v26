@@ -16,7 +16,7 @@ create or replace function public.certify_mission_version(p_mission_id text, p_v
 returns public.mission_versions
 language plpgsql
 security definer
-set search_path = public
+set search_path = ''
 as $$
 declare
   v_version public.mission_versions;
@@ -37,7 +37,7 @@ end $$;
 revoke all on function public.certify_mission_version(text,integer,bigint) from public, anon, authenticated;
 
 create or replace function public.quarantine_mission_version(p_mission_id text, p_version integer)
-returns void language sql security definer set search_path=public as $$
+returns void language sql security definer set search_path='' as $$
   update public.mission_versions set certification_status='quarantined', certified_at=null
   where mission_id=p_mission_id and version=p_version and certification_status in ('draft','certified');
 $$;
