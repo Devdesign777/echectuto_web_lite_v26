@@ -14,7 +14,8 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm install --ignore-scripts
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
       - run: npm run typecheck
       - run: node --test tests/**/*.test.mjs
       - run: npm run build
