@@ -6,7 +6,7 @@ const RAW_MISSIONS = [
   { id:'world1-3', world:1, order:3, title:'Les diagonales du Fou', kind:'interaction', status:'draft', rewardXp:70, definition:{type:'bishop',origin:'c3'} },
   { id:'world1-4', world:1, order:4, title:'Le saut du Cavalier', kind:'interaction', status:'draft', rewardXp:80, definition:{type:'knight',origin:'e4'} },
   { id:'world1-5', world:1, order:5, title:'Première épreuve', kind:'interaction', status:'draft', rewardXp:100, definition:{type:'square',target:'g6'} },
-  { id:'world3-1', world:3, order:1, title:'La fourchette', kind:'chess_move', status:'certified', rewardXp:140, definition:{sideToMove:'white',position:{b5:'♘',e8:'♚',a8:'♜',d8:'♛',g8:'♞',e1:'♔'},expectedMove:{from:'b5',to:'c7'}} },
+  { id:'world3-1', world:3, order:1, title:'La fourchette', kind:'chess_move', status:'certified', rewardXp:140, definition:{sideToMove:'white',objective:'give_check',position:{b5:'♘',e8:'♚',a8:'♜',d8:'♛',g8:'♞',e1:'♔'},expectedMove:{from:'b5',to:'c7'}} },
   { id:'world3-2', world:3, order:2, title:'Le clouage', kind:'chess_move', status:'draft', rewardXp:150, definition:{sideToMove:'white',position:{c4:'♗',c6:'♞',e8:'♚',a8:'♜',e1:'♔'},expectedMove:{from:'c4',to:'b5'}} },
   { id:'world3-3', world:3, order:3, title:"L’enfilade", kind:'chess_move', status:'draft', rewardXp:160, definition:{sideToMove:'white',position:{e1:'♖',e8:'♚',e7:'♛',a8:'♜',g1:'♔'},expectedMove:{from:'e1',to:'e6'}} },
   { id:'world3-4', world:3, order:4, title:'Attaque découverte', kind:'chess_move', status:'draft', rewardXp:170, definition:{sideToMove:'white',position:{b1:'♗',d3:'♘',h7:'♛',e8:'♚',e1:'♔'},expectedMove:{from:'d3',to:'f4'}} },

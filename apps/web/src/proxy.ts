@@ -1,2 +1,2 @@
-// Kept for reference — Next.js middleware is in src/middleware.ts.
-export type { NextRequest } from 'next/server'
+// Next.js middleware lives in src/middleware.ts. This file is intentionally empty.
+export {};

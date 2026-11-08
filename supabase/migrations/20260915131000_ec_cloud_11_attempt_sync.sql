@@ -39,6 +39,10 @@ create table public.attempt_submissions (
 );
 create index attempt_submissions_attempt_idx on public.attempt_submissions(attempt_id, created_at desc);
 
+create trigger mission_attempts_set_updated_at
+before update on public.mission_attempts
+for each row execute function public.set_updated_at();
+
 alter table public.attempt_events enable row level security;
 alter table public.attempt_submissions enable row level security;
 create policy attempt_events_select_own on public.attempt_events for select to authenticated using (auth.uid() = user_id);
